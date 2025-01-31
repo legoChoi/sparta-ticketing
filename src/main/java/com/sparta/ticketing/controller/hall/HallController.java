@@ -1,6 +1,10 @@
 package com.sparta.ticketing.controller.hall;
 
-import com.sparta.ticketing.dto.*;
+import com.sparta.ticketing.dto.hall.AddHallRequest;
+import com.sparta.ticketing.dto.hall.AddHallResponse;
+import com.sparta.ticketing.dto.hall.HallRequest;
+import com.sparta.ticketing.dto.hall.HallResponse;
+import com.sparta.ticketing.dto.seats.SeatsResponse;
 import com.sparta.ticketing.service.hall.HallService;
 import com.sparta.ticketing.service.seats.SeatsService;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
-package com.sparta.ticketing.dto;
+package com.sparta.ticketing.dto.hall;
 
-import com.sparta.ticketing.entity.Hall;
+import com.sparta.ticketing.dto.seats.SeatsResponse;
 
 public class AddHallResponse {
     private final long id;

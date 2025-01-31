@@ -1,7 +1,7 @@
 package com.sparta.ticketing.service.hall;
 
-import com.sparta.ticketing.dto.HallRequest;
-import com.sparta.ticketing.dto.HallResponse;
+import com.sparta.ticketing.dto.hall.HallRequest;
+import com.sparta.ticketing.dto.hall.HallResponse;
 import com.sparta.ticketing.entity.Hall;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.sparta.ticketing.dto;
+package com.sparta.ticketing.dto.hall;
 
 import com.sparta.ticketing.entity.Hall;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.sparta.ticketing.dto;
+package com.sparta.ticketing.dto.seats;
 
 import com.sparta.ticketing.entity.SessionSeats;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.sparta.ticketing.controller.hall;
 
-import com.sparta.ticketing.dto.SessionSeatsResponse;
+import com.sparta.ticketing.dto.seats.SessionSeatsResponse;
 import com.sparta.ticketing.service.sessionseats.SessionSeatsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

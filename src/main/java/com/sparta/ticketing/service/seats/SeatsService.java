@@ -1,6 +1,6 @@
 package com.sparta.ticketing.service.seats;
 
-import com.sparta.ticketing.dto.SeatsResponse;
+import com.sparta.ticketing.dto.seats.SeatsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

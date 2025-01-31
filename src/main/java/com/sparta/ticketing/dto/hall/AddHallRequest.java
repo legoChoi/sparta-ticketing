@@ -1,4 +1,4 @@
-package com.sparta.ticketing.dto;
+package com.sparta.ticketing.dto.hall;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
