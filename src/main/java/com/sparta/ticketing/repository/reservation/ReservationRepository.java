@@ -15,6 +15,12 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     public List<Reservation> findAllWithoutFailAndCancel();
     public Optional<Reservation> findFirstById(Long reservationId);
 
+    @Query(
+        "select r " +
+            "from Reservation r " +
+            "where r.status == 'SUCESS' and r.sessions.id = :sessionId and r.seats.id = :seatId")
+    Optional<Reservation> checkAlreadyReserved(Long sessionsId, Long seatId);
+
     @Modifying
     @Query("update Reservation r set r.status = :status where r.reservationId = :reservationId")
     void updateStatusByReservationId(ReservationStatus status, Long reservationId);

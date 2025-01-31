@@ -7,21 +7,21 @@ import lombok.Getter;
 @Getter
 public class ReservationPostRequest {
     private final Long sessionId;
-    private final Long sessionSeatId;
+    private final Long seatId;
     private final String name;
 
-    private ReservationPostRequest(Long sessionId, Long sessionSeatId, String name) {
+    private ReservationPostRequest(Long sessionId, Long seatId, String name) {
         this.sessionId = sessionId;
-        this.sessionSeatId = sessionSeatId;
+        this.seatId = seatId;
         this.name = name;
     }
 
     @JsonCreator
     public static ReservationPostRequest from(
         @JsonProperty("sessionId") Long sessionId,
-        @JsonProperty("sessionSeatId") Long sessionSeatId,
+        @JsonProperty("seatId") Long seatId,
         @JsonProperty("name") String name
     ) {
-        return new ReservationPostRequest(sessionId, sessionSeatId, name);
+        return new ReservationPostRequest(sessionId, seatId, name);
     }
 }

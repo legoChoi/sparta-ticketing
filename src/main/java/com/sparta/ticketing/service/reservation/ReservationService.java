@@ -13,12 +13,14 @@ public class ReservationService implements ReservationServiceInterface {
     private final ReservationRepository reservationRepository;
 
     @Override
-    public void addReservation(Long sessionId, Long sessionSeatId, String name) {
+    public void addReservation(Long sessionId, Long seatId, String name) {
         ReservationStatus status = ReservationStatus.REQUEST;
         Reservation reservation = new Reservation(status, name);
 
         try {
-            // session, sessionSeat repository에서 각각을 조회하기
+            // session, seats repository에서 각각을 조회하기
+
+            checkAlreadyReserved(sessionId, seatId);
 
             status = purchase(status);
 
@@ -49,5 +51,11 @@ public class ReservationService implements ReservationServiceInterface {
             return ReservationStatus.SUCCESS;
         }
         throw new IllegalStateException("결제 실패");
+    }
+
+    private void checkAlreadyReserved(Long sessionId, Long seatId) {
+        if(reservationRepository.checkAlreadyReserved(sessionId, seatId).isPresent()) {
+            throw new IllegalArgumentException("Already booked seats");
+        }
     }
 }

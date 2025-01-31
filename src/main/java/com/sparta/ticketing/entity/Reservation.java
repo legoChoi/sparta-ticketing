@@ -20,14 +20,14 @@ public class Reservation {
     private String userName;
 
     @Setter
-    @JoinColumn(name = "concert_session_id", nullable = false)
+    @JoinColumn(name = "session_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Session sessions;
 
     @Setter
-    @JoinColumn(name = "reservated_seat_id", nullable = false)
+    @JoinColumn(name = "seat_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
-    private SessionSeats sessionSeats;
+    private Seats seats;
 
     public Reservation(ReservationStatus status, String userName) {
         this.status = status;

@@ -17,7 +17,7 @@ public class ReservationController {
 
     @PostMapping
     public ResponseEntity<String> postReservation(@RequestBody ReservationPostRequest dto) {
-        service.addReservation(dto.getSessionId(), dto.getSessionSeatId(), dto.getName());
+        service.addReservation(dto.getSessionId(), dto.getSeatId(), dto.getName());
         return ResponseEntity.created(URI.create("")).build();
     }
 
