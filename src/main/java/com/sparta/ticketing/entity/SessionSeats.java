@@ -1,5 +1,6 @@
 package com.sparta.ticketing.entity;
 
+import com.sparta.ticketing.status.SessionSeatsStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,10 @@ public class SessionSeats {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "session_id")
     private Session session;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "seats_status")
+    private SessionSeatsStatus sessionSeatsStatus;
 
     public SessionSeats(Seats seats, Session session) {
         this.seats = seats;
