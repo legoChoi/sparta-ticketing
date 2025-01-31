@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+    // 생성 중 실패했거나 예약 취소와 같이 soft delete 된 케이스들을 제외하고 조회
     @Query("select r from Reservation r where r.status <> 'FAIL' and r.status <> 'CANCEL'")
     public List<Reservation> findAllWithoutFailAndCancel();
     public Optional<Reservation> findFirstById(Long reservationId);

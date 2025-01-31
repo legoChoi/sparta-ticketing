@@ -14,19 +14,20 @@ public class ReservationService implements ReservationServiceInterface {
 
     @Override
     public void addReservation(Long sessionId, Long sessionSeatId, String name) {
-        // session, sessionSeat repository에서 각각을 조회하기
-
-        Reservation reservation = new Reservation(ReservationStatus.REQUEST, name);
+        ReservationStatus status = ReservationStatus.REQUEST;
+        Reservation reservation = new Reservation(status, name);
 
         try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            reservation.setStatus(ReservationStatus.SUCCESS);
+            // session, sessionSeat repository에서 각각을 조회하기
+
+            status = purchase(status);
+
         } catch (Exception e) {
-            reservation.setStatus(ReservationStatus.FAIL);
-        } finally {
-            reservationRepository.save(reservation);
+            status = ReservationStatus.FAIL;
         }
+
+        reservation.setStatus(status);
+        reservationRepository.save(reservation);
     }
 
     @Override
@@ -39,5 +40,14 @@ public class ReservationService implements ReservationServiceInterface {
         Reservation reservation = reservationRepository.findFirstById(reservationId)
             .orElseThrow(() -> new IllegalArgumentException("No reservation found"));
         reservationRepository.updateStatusByReservationId(ReservationStatus.CANCEL, reservationId);
+    }
+
+    private ReservationStatus purchase(ReservationStatus status) {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            return ReservationStatus.SUCCESS;
+        }
+        throw new IllegalStateException("결제 실패");
     }
 }
