@@ -25,7 +25,7 @@ public class HallController {
     @PostMapping
     public ResponseEntity<AddHallResponse> addHall(@RequestBody AddHallRequest addHallRequest) {
         HallResponse hallResponse = hallService.addHall(HallRequest.from(addHallRequest));
-        SeatsResponse seatsResponse = seatsService.addSeats(addHallRequest.getSeatNumber());
+        SeatsResponse seatsResponse = seatsService.addSeats(hallResponse.getId(),addHallRequest.getSeatNumber());
         AddHallResponse from = AddHallResponse.from(hallResponse, seatsResponse);
         return ResponseEntity.status(HttpStatus.CREATED).body(from);
     }
