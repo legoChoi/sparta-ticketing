@@ -1,5 +1,6 @@
 package com.sparta.ticketing.entity;
 
+import com.sparta.ticketing.dto.hall.HallRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ public class Hall {
         this.location = location;
     }
 
-    public static Hall from(String name, String location) {
-        return new Hall(name, location);
+    public static Hall from(HallRequest hallRequest) {
+        return new Hall(hallRequest.getName(),hallRequest.getLocation());
     }
 }

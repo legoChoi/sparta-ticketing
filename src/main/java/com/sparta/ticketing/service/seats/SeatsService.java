@@ -18,7 +18,6 @@ public class SeatsService {
         for (int i = 1; i <= seatNumber; i++) {
             seats.add(new SeatsDto(hallId));
         }
-
         seatsConnectorInterface.bulkInsertSeats(seats);
         return new SeatsResponse(seatNumber);
     }
