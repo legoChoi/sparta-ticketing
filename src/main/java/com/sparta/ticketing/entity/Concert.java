@@ -15,4 +15,8 @@ public class Concert {
 
     @Column(name = "concert_name")
     private String name;
+
+    public Concert(String name){
+        this.name = name;
+    }
 }
