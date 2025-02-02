@@ -15,14 +15,13 @@ import java.util.List;
 public class SeatsService {
     private final SeatsConnectorInterface seatsConnectorInterface;
     private final HallConnectorInterface hallConnectorInterface;
-    public List<AllSeatsResponse> addSeats(long hallId, int seatNumber) {
+    public void addSeats(long hallId, int seatNumber) {
         List<Seats> seats = new ArrayList<>();
         Hall byId = hallConnectorInterface.findById(hallId);
         for (int i = 1; i <= seatNumber; i++) {
             seats.add(Seats.from(byId,i));
         }
-        List<Seats> seatsList = seatsConnectorInterface.saveAll(seats);
-        return seatsList.stream().map(AllSeatsResponse::from).toList();
+        seatsConnectorInterface.saveAll(seats);
     }
 
     public List<AllSeatsResponse> getAll(long hallId) {

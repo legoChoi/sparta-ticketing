@@ -1,5 +1,6 @@
 package com.sparta.ticketing.dto.hall;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 
 @Getter

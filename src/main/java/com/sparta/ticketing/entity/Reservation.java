@@ -14,7 +14,7 @@ public class Reservation {
     private Long reservationId;
 
     @Setter
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
     private String userName;
@@ -22,10 +22,10 @@ public class Reservation {
     @Setter
     @JoinColumn(name = "session_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
-    private Session sessions;
+    private Session session;
 
     @Setter
-    @JoinColumn(name = "seat_id", nullable = false)
+    @JoinColumn(name = "seats_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Seats seats;
 

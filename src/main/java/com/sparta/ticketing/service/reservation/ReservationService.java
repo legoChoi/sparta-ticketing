@@ -39,7 +39,7 @@ public class ReservationService implements ReservationServiceInterface {
 
     @Override
     public void cancelReservation(Long reservationId) {
-        Reservation reservation = reservationRepository.findFirstById(reservationId)
+        Reservation reservation = reservationRepository.findFirstByReservationId(reservationId)
             .orElseThrow(() -> new IllegalArgumentException("No reservation found"));
         reservationRepository.updateStatusByReservationId(ReservationStatus.CANCEL, reservationId);
     }
