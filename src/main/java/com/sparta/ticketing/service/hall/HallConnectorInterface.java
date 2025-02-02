@@ -11,4 +11,6 @@ public interface HallConnectorInterface {
     Hall addHall(HallRequest hallRequest);
 
     List<Hall> getAllHall();
+
+    Hall findById(long hallId);
 }

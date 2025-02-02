@@ -4,6 +4,7 @@ import com.sparta.ticketing.dto.hall.AddHallRequest;
 import com.sparta.ticketing.dto.hall.AddHallResponse;
 import com.sparta.ticketing.dto.hall.HallRequest;
 import com.sparta.ticketing.dto.hall.HallResponse;
+import com.sparta.ticketing.dto.seats.AllSeatsResponse;
 import com.sparta.ticketing.dto.seats.SeatsResponse;
 import com.sparta.ticketing.service.hall.HallService;
 import com.sparta.ticketing.service.seats.SeatsService;
@@ -25,8 +26,8 @@ public class HallController {
     @PostMapping
     public ResponseEntity<AddHallResponse> addHall(@RequestBody AddHallRequest addHallRequest) {
         HallResponse hallResponse = hallService.addHall(HallRequest.from(addHallRequest));
-        SeatsResponse seatsResponse = seatsService.addSeats(hallResponse.getId(),addHallRequest.getSeatNumber());
-        AddHallResponse from = AddHallResponse.from(hallResponse, seatsResponse);
+        List<AllSeatsResponse> allSeatsResponses = seatsService.addSeats(hallResponse.getId(), addHallRequest.getSeatNumber());
+        AddHallResponse from = AddHallResponse.from(hallResponse, allSeatsResponses);
         return ResponseEntity.status(HttpStatus.CREATED).body(from);
     }
 

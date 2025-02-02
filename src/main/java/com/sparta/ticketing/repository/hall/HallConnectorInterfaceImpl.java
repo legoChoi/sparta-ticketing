@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -25,5 +26,10 @@ public class HallConnectorInterfaceImpl implements HallConnectorInterface {
     @Override
     public List<Hall> getAllHall() {
         return hallRepository.findAll();
+    }
+
+    @Override
+    public Hall findById(long hallId) {
+        return hallRepository.findById(hallId).orElseThrow(()->new IllegalArgumentException("not found hall"));
     }
 }

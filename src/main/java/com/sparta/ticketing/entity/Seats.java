@@ -16,11 +16,16 @@ public class Seats {
     @JoinColumn(name = "hall_id")
     private Hall hall;
 
-    public Seats(Hall hall) {
+    @Column(name = "seat_number")
+    private int seatNumber;
+
+
+    public Seats(Hall hall,int seatNumber) {
         this.hall = hall;
+        this.seatNumber = seatNumber;
     }
 
-    public static Seats from(Hall hall) {
-        return new Seats(hall);
+    public static Seats from(Hall hall, int seatNumber) {
+        return new Seats(hall, seatNumber);
     }
 }
