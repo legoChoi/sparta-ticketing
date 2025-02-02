@@ -27,4 +27,13 @@ public class Session {
     private LocalDateTime startDateTime;
     @Column(name = "end_date_time")
     private LocalDateTime endDateTime;
+
+    public Session(Hall hall, Concert concert, LocalDateTime startDateTime, LocalDateTime endDateTime){
+        this.hall = hall;
+        this.concert = concert;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+    }
+
+
 }
