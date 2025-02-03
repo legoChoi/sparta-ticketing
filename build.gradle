@@ -33,7 +33,9 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'com.h2database:h2:2.1.214'
-	implementation 'org.springframework.data:spring-data-redis:3.0.3'
+
+	// redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {
