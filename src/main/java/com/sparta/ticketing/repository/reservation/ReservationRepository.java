@@ -19,7 +19,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query(
         "select r " +
             "from Reservation r " +
-            "where r.status = 'SUCESS' and r.session.id = :sessionId and r.seats.id = :seatId")
+            "where r.status = 'SUCCESS' and r.session.id = :sessionId and r.seats.id = :seatId")
     Optional<Reservation> checkAlreadyReserved(@Param("sessionId") Long sessionsId, @Param("seatId") Long seatId);
 
     @Modifying
