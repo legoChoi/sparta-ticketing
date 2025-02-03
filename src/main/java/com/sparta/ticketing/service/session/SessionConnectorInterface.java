@@ -8,9 +8,10 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Component
 public interface SessionConnectorInterface {
     void addSession(Hall hall, Concert concert, LocalDateTime startDateTime, LocalDateTime endDateTime);
 
     List<Session> getAllSessions();
+
+    public Session findById(Long sessionId);
 }

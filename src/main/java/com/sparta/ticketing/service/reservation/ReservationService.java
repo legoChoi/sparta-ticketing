@@ -5,30 +5,28 @@ import com.sparta.ticketing.entity.Reservation;
 import com.sparta.ticketing.entity.ReservationStatus;
 import com.sparta.ticketing.entity.Seats;
 import com.sparta.ticketing.entity.Session;
-import com.sparta.ticketing.repository.reservation.ReservationRepository;
-import com.sparta.ticketing.repository.seats.SeatsRepository;
-import com.sparta.ticketing.repository.session.SessionRepository;
+import com.sparta.ticketing.repository.reservation.ReservationConnectorInterface;
+import com.sparta.ticketing.service.seats.SeatsConnectorInterface;
+import com.sparta.ticketing.service.session.SessionConnectorInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class ReservationService implements ReservationServiceInterface {
-    private final ReservationRepository reservationRepository;
-    private final SessionRepository sessionRepository;
-    private final SeatsRepository seatsRepository;
+    private final ReservationConnectorInterface reservationConnector;
+    private final SessionConnectorInterface sessionConnector;
+    private final SeatsConnectorInterface seatsConnector;
 
     @Override
     public void addReservation(Long sessionId, Long seatId, String name) {
         ReservationStatus status = ReservationStatus.REQUEST;
-        Reservation reservation = new Reservation(status, name);
+        Reservation reservation = Reservation.from(status, name);
 
         try {
             // session, seats repository에서 각각을 조회하기
-            Session session = sessionRepository.findFirstById(sessionId)
-                .orElseThrow(() -> new IllegalArgumentException("no session found"));
-            Seats seat = seatsRepository.findFirstById(seatId)
-                .orElseThrow(() -> new IllegalArgumentException("no seat found"));
+            Session session = sessionConnector.findById(sessionId);
+            Seats seat = seatsConnector.findById(seatId);
 
             checkAlreadyReserved(sessionId, seatId);
 
@@ -41,19 +39,18 @@ public class ReservationService implements ReservationServiceInterface {
         }
 
         reservation.setStatus(status);
-        reservationRepository.save(reservation);
+        reservationConnector.addReservation(reservation);
     }
 
     @Override
     public ReservationGetResponse getReservations() {
-        return new ReservationGetResponse(reservationRepository.findAllWithoutFailAndCancel());
+        return new ReservationGetResponse(reservationConnector.findActiveReservations());
     }
 
     @Override
     public void cancelReservation(Long reservationId) {
-        Reservation reservation = reservationRepository.findFirstByReservationId(reservationId)
-            .orElseThrow(() -> new IllegalArgumentException("No reservation found"));
-        reservationRepository.updateStatusByReservationId(ReservationStatus.CANCEL, reservationId);
+        Reservation reservation = reservationConnector.findById(reservationId);
+        reservationConnector.updateStatusById(reservationId, ReservationStatus.CANCEL);
     }
 
     private ReservationStatus purchase() {
@@ -66,7 +63,7 @@ public class ReservationService implements ReservationServiceInterface {
     }
 
     private void checkAlreadyReserved(Long sessionId, Long seatId) {
-        if(reservationRepository.checkAlreadyReserved(sessionId, seatId).isPresent()) {
+        if(reservationConnector.alreadyReserved(sessionId, seatId)) {
             throw new IllegalArgumentException("Already booked seats");
         }
     }

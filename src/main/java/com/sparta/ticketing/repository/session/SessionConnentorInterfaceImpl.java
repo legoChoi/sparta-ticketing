@@ -27,4 +27,10 @@ public class SessionConnentorInterfaceImpl implements SessionConnectorInterface 
     public List<Session> getAllSessions() {
         return sessionRepository.findAll();
     }
+
+    @Override
+    public Session findById(Long sessionId) {
+        return sessionRepository.findFirstById(sessionId)
+            .orElseThrow(() -> new IllegalArgumentException("no session found"));
+    }
 }

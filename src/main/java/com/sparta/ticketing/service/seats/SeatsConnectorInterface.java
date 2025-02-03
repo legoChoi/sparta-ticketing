@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
 public interface SeatsConnectorInterface {
     void bulkInsertSeats(List<SeatsDto> seatNumber);
 
@@ -14,5 +13,5 @@ public interface SeatsConnectorInterface {
 
     List<Seats> findAll(long hallId);
 
-
+    Seats findById(Long seatId);
 }

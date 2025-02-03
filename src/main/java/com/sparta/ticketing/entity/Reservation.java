@@ -29,8 +29,12 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.LAZY)
     private Seats seats;
 
-    public Reservation(ReservationStatus status, String userName) {
+    private Reservation(ReservationStatus status, String userName) {
         this.status = status;
         this.userName = userName;
+    }
+
+    public static Reservation from(ReservationStatus status, String userName) {
+        return new Reservation(status, userName);
     }
 }

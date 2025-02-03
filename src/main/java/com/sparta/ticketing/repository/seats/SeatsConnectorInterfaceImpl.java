@@ -36,4 +36,10 @@ public class SeatsConnectorInterfaceImpl implements SeatsConnectorInterface {
     public List<Seats> findAll(long hallId) {
         return seatsRepository.findAllByHallId(hallId);
     }
+
+    @Override
+    public Seats findById(Long seatId) {
+        return seatsRepository.findById(seatId)
+            .orElseThrow(() -> new IllegalArgumentException("no seat found"));
+    }
 }
