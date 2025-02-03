@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SessionConnectorInterface {
-    void addSession(Hall hall, Concert concert, LocalDateTime startDateTime, LocalDateTime endDateTime, int validSeatCount);
+    Session addSession(Hall hall, Concert concert, LocalDateTime startDateTime, LocalDateTime endDateTime, int validSeatCount);
 
     List<Session> getAllSessions();
 
