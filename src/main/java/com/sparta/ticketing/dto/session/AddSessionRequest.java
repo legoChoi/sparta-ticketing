@@ -12,4 +12,5 @@ public class AddSessionRequest {
     private final Long hallId;
     private final LocalDateTime startDateTime;
     private final LocalDateTime endDateTime;
+    private final Integer validSeatCount;
 }

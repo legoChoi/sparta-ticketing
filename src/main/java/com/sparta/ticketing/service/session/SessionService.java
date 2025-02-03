@@ -21,12 +21,12 @@ public class SessionService{
     private final HallConnectorInterface hallConnectorInterface;
     private final ConcertConnectorInterface concertConnectorInterface;
 
-    public void addSession(AddSessionRequest addSessionRequest) {
-        // TODO: exception 바꾸기
+    public Session addSession(AddSessionRequest addSessionRequest) {
         Hall hall = hallConnectorInterface.findById(addSessionRequest.getHallId());
-
         Concert concert = concertConnectorInterface.findById(addSessionRequest.getConcertId());
-        sessionConnectorInterface.addSession(hall, concert, addSessionRequest.getStartDateTime(), addSessionRequest.getEndDateTime());
+
+        return sessionConnectorInterface.addSession(hall, concert, addSessionRequest.getStartDateTime(), addSessionRequest.getEndDateTime(), addSessionRequest.getValidSeatCount());
+
     }
 
     public List<SessionResponse> getAllSessions() {
