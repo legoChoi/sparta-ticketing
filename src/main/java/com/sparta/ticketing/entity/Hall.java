@@ -27,4 +27,5 @@ public class Hall {
     public static Hall from(HallRequest hallRequest) {
         return new Hall(hallRequest.getName(),hallRequest.getLocation());
     }
+
 }

@@ -37,4 +37,5 @@ out/
 .vscode/
 
 ### Hibernate JPA ###
+*.properties
 *.yml

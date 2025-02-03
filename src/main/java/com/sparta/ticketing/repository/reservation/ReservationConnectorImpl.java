@@ -5,6 +5,7 @@ import com.sparta.ticketing.entity.ReservationStatus;
 import com.sparta.ticketing.service.reservation.ReservationConnectorInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,7 +19,9 @@ public class ReservationConnectorImpl implements ReservationConnectorInterface {
         return reservationRepository.save(reservation);
     }
 
+
     @Override
+    @Transactional
     public void updateStatusById(Long reservationId, ReservationStatus status) {
         reservationRepository.updateStatusByReservationId(reservationId, status);
     }

@@ -22,26 +22,28 @@ public class ReservationService{
 
     @Transactional
     public void addReservation(Long sessionId, Long seatId, String name) {
+        // session, seats repository에서 각각을 조회하기
+        checkAlreadyReserved(sessionId, seatId);
+
+        Session session = sessionConnector.findById(sessionId);
+        Seats seat = seatsConnector.findById(seatId);
+
         ReservationStatus status = ReservationStatus.REQUEST;
         Reservation reservation = Reservation.from(status, name);
+        reservation.setSession(session);
+        reservation.setSeats(seat);
 
-        try {
-            // session, seats repository에서 각각을 조회하기
-            Session session = sessionConnector.findById(sessionId);
-            Seats seat = seatsConnector.findById(seatId);
-
-            checkAlreadyReserved(sessionId, seatId);
-
-            reservation.setSession(session);
-            reservation.setSeats(seat);
-            status = purchase();
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            status = ReservationStatus.FAIL;
-        }
+        status = ReservationStatus.SUCCESS;
+        //status = purchase();
+//
+//        try {
+//        } catch (Exception e) {
+//            log.error(e.getMessage());
+//            status = ReservationStatus.FAIL;
+//        }
 
         reservation.setStatus(status);
+
         reservationConnector.addReservation(reservation);
     }
 
@@ -60,6 +62,7 @@ public class ReservationService{
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             log.info(e.getMessage());
+            return ReservationStatus.FAIL;
         }
         return ReservationStatus.SUCCESS;
     }

@@ -31,10 +31,12 @@ public class DummyCreatorTest {
         Hall hall = new Hall("hall", "seoul");
         hallRepository.save(hall);
 
+        Session session = new Session(hall, concert, LocalDateTime.now(), LocalDateTime.now()),10)
+
         for (int i = 1; i <= 10; i++) {
-            seatsRepository.save(new Seats(hall, i));
+            seatsRepository.save(new Seats(session, i));
         }
 
-        sessionRepository.save(new Session(hall, concert, LocalDateTime.now(), LocalDateTime.now()));
+        sessionRepository.save(session);
     }
 }

@@ -13,19 +13,20 @@ public class Seats {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hall_id")
-    private Hall hall;
+    @JoinColumn(name = "session_id")
+    private Session session;
 
     @Column(name = "seat_number")
     private int seatNumber;
 
+    private boolean isAvailable = true;
 
-    public Seats(Hall hall,int seatNumber) {
-        this.hall = hall;
+    public Seats(Session session,int seatNumber) {
+        this.session = session ;
         this.seatNumber = seatNumber;
     }
 
-    public static Seats from(Hall hall, int seatNumber) {
-        return new Seats(hall, seatNumber);
+    public static Seats from(Session session, int seatNumber) {
+        return new Seats(session, seatNumber);
     }
 }
