@@ -3,7 +3,11 @@ package com.sparta.ticketing.service.reservation;
 import com.sparta.ticketing.dto.reservation.ReservationGetResponse;
 import com.sparta.ticketing.entity.Reservation;
 import com.sparta.ticketing.entity.ReservationStatus;
+import com.sparta.ticketing.entity.Seats;
+import com.sparta.ticketing.entity.Session;
 import com.sparta.ticketing.repository.reservation.ReservationRepository;
+import com.sparta.ticketing.repository.seats.SeatsRepository;
+import com.sparta.ticketing.repository.session.SessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +15,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ReservationService implements ReservationServiceInterface {
     private final ReservationRepository reservationRepository;
+    private final SessionRepository sessionRepository;
+    private final SeatsRepository seatsRepository;
 
     @Override
     public void addReservation(Long sessionId, Long seatId, String name) {
@@ -19,10 +25,16 @@ public class ReservationService implements ReservationServiceInterface {
 
         try {
             // session, seats repository에서 각각을 조회하기
+            Session session = sessionRepository.findFirstById(sessionId)
+                .orElseThrow(() -> new IllegalArgumentException("no session found"));
+            Seats seat = seatsRepository.findFirstById(seatId)
+                .orElseThrow(() -> new IllegalArgumentException("no seat found"));
 
             checkAlreadyReserved(sessionId, seatId);
 
-            status = purchase(status);
+            reservation.setSession(session);
+            reservation.setSeats(seat);
+            status = purchase();
 
         } catch (Exception e) {
             status = ReservationStatus.FAIL;
@@ -44,7 +56,7 @@ public class ReservationService implements ReservationServiceInterface {
         reservationRepository.updateStatusByReservationId(ReservationStatus.CANCEL, reservationId);
     }
 
-    private ReservationStatus purchase(ReservationStatus status) {
+    private ReservationStatus purchase() {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
