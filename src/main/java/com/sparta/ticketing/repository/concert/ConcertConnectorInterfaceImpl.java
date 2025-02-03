@@ -24,4 +24,9 @@ public class ConcertConnectorInterfaceImpl implements ConcertConnectorInterface 
     public List<Concert> getAllConcerts() {
         return concertRepository.findAll();
     }
+
+    @Override
+    public Concert findById(Long concertId) {
+        return concertRepository.findById(concertId).orElseThrow(() ->new IllegalArgumentException("not found concert"));
+    }
 }

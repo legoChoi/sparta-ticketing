@@ -10,4 +10,6 @@ public interface ConcertConnectorInterface {
     void addConcert(String name);
 
     List<Concert> getAllConcerts();
+
+    Concert findById(Long concertId);
 }

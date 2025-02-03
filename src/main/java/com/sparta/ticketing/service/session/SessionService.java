@@ -5,9 +5,8 @@ import com.sparta.ticketing.dto.session.SessionResponse;
 import com.sparta.ticketing.entity.Concert;
 import com.sparta.ticketing.entity.Hall;
 import com.sparta.ticketing.entity.Session;
-import com.sparta.ticketing.repository.concert.ConcertRepository;
-import com.sparta.ticketing.repository.hall.HallRepository;
-import com.sparta.ticketing.repository.session.SessionRepository;
+import com.sparta.ticketing.service.concert.ConcertConnectorInterface;
+import com.sparta.ticketing.service.hall.HallConnectorInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,24 +16,23 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class SessionService implements SessionServiceInterface{
-    private final SessionRepository sessionRepository;
-    private final HallRepository hallRepository;
-    private final ConcertRepository concertRepository;
+
+    private final SessionConnectorInterface sessionConnectorInterface;
+    private final HallConnectorInterface hallConnectorInterface;
+    private final ConcertConnectorInterface concertConnectorInterface;
 
     @Override
     public void addSession(AddSessionRequest addSessionRequest) {
         // TODO: exception 바꾸기
-        Hall hall = hallRepository.findById(addSessionRequest.getHallId())
-                .orElseThrow(()-> new RuntimeException());
+        Hall hall = hallConnectorInterface.findById(addSessionRequest.getHallId());
 
-        Concert concert = concertRepository.findById(addSessionRequest.getConcertId())
-                        .orElseThrow(() -> new RuntimeException());
-        sessionRepository.save(new Session(hall, concert, addSessionRequest.getStartDateTime(), addSessionRequest.getEndDateTime()));
+        Concert concert = concertConnectorInterface.findById(addSessionRequest.getConcertId());
+        sessionConnectorInterface.addSession(hall, concert, addSessionRequest.getStartDateTime(), addSessionRequest.getEndDateTime());
     }
 
     @Override
     public List<SessionResponse> getAllSessions() {
-        List<Session> sessions = sessionRepository.findAll();
+        List<Session> sessions = sessionConnectorInterface.getAllSessions();
         return sessions.stream()
                 .map(session -> new SessionResponse(session))
                 .collect(Collectors.toList());

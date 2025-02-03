@@ -2,7 +2,6 @@ package com.sparta.ticketing.controller.concert;
 
 import com.sparta.ticketing.dto.concert.AddConcertRequest;
 import com.sparta.ticketing.dto.concert.ConcertResponse;
-import com.sparta.ticketing.service.concert.ConcertConnectorInterface;
 import com.sparta.ticketing.service.concert.ConcertServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
