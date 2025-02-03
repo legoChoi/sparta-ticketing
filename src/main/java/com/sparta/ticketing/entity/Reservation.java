@@ -20,12 +20,12 @@ public class Reservation {
     private String userName;
 
     @Setter
-    @JoinColumn(name = "session_id", nullable = false)
+    @JoinColumn(name = "session_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Session session;
 
     @Setter
-    @JoinColumn(name = "seats_id", nullable = false)
+    @JoinColumn(name = "seats_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Seats seats;
 

@@ -5,6 +5,7 @@ import com.sparta.ticketing.entity.ReservationStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +20,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
         "select r " +
             "from Reservation r " +
             "where r.status = 'SUCESS' and r.session.id = :sessionId and r.seats.id = :seatId")
-    Optional<Reservation> checkAlreadyReserved(Long sessionsId, Long seatId);
+    Optional<Reservation> checkAlreadyReserved(@Param("sessionId") Long sessionsId, @Param("seatId") Long seatId);
 
     @Modifying
     @Query("update Reservation r set r.status = :status where r.reservationId = :reservationId")

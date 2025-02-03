@@ -12,7 +12,6 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-@Transactional
 public class SeatsConnectorInterfaceImpl implements SeatsConnectorInterface {
     private final JdbcTemplate jdbcTemplate;
     private final SeatsRepository seatsRepository;
@@ -39,7 +38,7 @@ public class SeatsConnectorInterfaceImpl implements SeatsConnectorInterface {
 
     @Override
     public Seats findById(Long seatId) {
-        return seatsRepository.findById(seatId)
+        return seatsRepository.findFirstById(seatId)
             .orElseThrow(() -> new IllegalArgumentException("no seat found"));
     }
 }

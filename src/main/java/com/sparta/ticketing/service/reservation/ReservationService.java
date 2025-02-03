@@ -9,9 +9,12 @@ import com.sparta.ticketing.repository.reservation.ReservationConnectorInterface
 import com.sparta.ticketing.service.seats.SeatsConnectorInterface;
 import com.sparta.ticketing.service.session.SessionConnectorInterface;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ReservationService implements ReservationServiceInterface {
     private final ReservationConnectorInterface reservationConnector;
@@ -19,12 +22,12 @@ public class ReservationService implements ReservationServiceInterface {
     private final SeatsConnectorInterface seatsConnector;
 
     @Override
+    @Transactional
     public void addReservation(Long sessionId, Long seatId, String name) {
         ReservationStatus status = ReservationStatus.REQUEST;
         Reservation reservation = Reservation.from(status, name);
 
         try {
-            // session, seats repository에서 각각을 조회하기
             Session session = sessionConnector.findById(sessionId);
             Seats seat = seatsConnector.findById(seatId);
 
@@ -35,6 +38,7 @@ public class ReservationService implements ReservationServiceInterface {
             status = purchase();
 
         } catch (Exception e) {
+            log.error(e.getMessage());
             status = ReservationStatus.FAIL;
         }
 
@@ -48,6 +52,7 @@ public class ReservationService implements ReservationServiceInterface {
     }
 
     @Override
+    @Transactional
     public void cancelReservation(Long reservationId) {
         Reservation reservation = reservationConnector.findById(reservationId);
         reservationConnector.updateStatusById(reservationId, ReservationStatus.CANCEL);
@@ -57,9 +62,9 @@ public class ReservationService implements ReservationServiceInterface {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
-            return ReservationStatus.SUCCESS;
+            log.info(e.getMessage());
         }
-        throw new IllegalStateException("결제 실패");
+        return ReservationStatus.SUCCESS;
     }
 
     private void checkAlreadyReserved(Long sessionId, Long seatId) {
