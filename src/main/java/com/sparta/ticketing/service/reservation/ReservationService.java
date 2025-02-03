@@ -45,6 +45,8 @@ public class ReservationService{
         reservation.setStatus(status);
 
         reservationConnector.addReservation(reservation);
+        // 회차 좌석 수 +, 좌석 예약 여부 true
+        swapSeatAvailability(reservation.getSession(), reservation.getSeats());
     }
 
     public ReservationGetResponse getReservations() {
@@ -55,6 +57,16 @@ public class ReservationService{
     public void cancelReservation(Long reservationId) {
         Reservation reservation = reservationConnector.findById(reservationId);
         reservationConnector.updateStatusById(reservationId, ReservationStatus.CANCEL);
+        // 회차 좌석 수 -, 좌석 예약 여부 false
+        swapSeatAvailability(reservation.getSession(), reservation.getSeats());
+    }
+
+    @Transactional
+    public void swapSeatAvailability(Session session, Seats seats) {
+        session.countPlusMinus(seats.isAvailable());
+        seats.swapAvailability();
+        sessionConnector.update(session);
+        seatsConnector.update(seats);
     }
 
     private ReservationStatus purchase() {

@@ -3,6 +3,7 @@ package com.sparta.ticketing.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Entity
@@ -29,4 +30,6 @@ public class Seats {
     public static Seats from(Session session, int seatNumber) {
         return new Seats(session, seatNumber);
     }
+
+    public void swapAvailability() { this.isAvailable = !this.isAvailable; }
 }

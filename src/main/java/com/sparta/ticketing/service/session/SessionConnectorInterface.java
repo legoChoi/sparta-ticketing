@@ -13,4 +13,6 @@ public interface SessionConnectorInterface {
     List<Session> getAllSessions();
 
     public Session findById(Long sessionId);
+
+    Session update(Session session);
 }

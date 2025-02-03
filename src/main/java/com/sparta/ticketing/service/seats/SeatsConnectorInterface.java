@@ -14,4 +14,6 @@ public interface SeatsConnectorInterface {
     List<Seats> findAll(long hallId);
 
     Seats findById(Long seatId);
+
+    Seats update(Seats seats);
 }

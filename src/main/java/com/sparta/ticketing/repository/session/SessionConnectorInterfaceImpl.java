@@ -32,4 +32,9 @@ public class SessionConnectorInterfaceImpl implements SessionConnectorInterface 
         return sessionRepository.findFirstById(sessionId)
             .orElseThrow(() -> new IllegalArgumentException("no session found"));
     }
+
+    @Override
+    public Session update(Session session) {
+        return sessionRepository.save(session);
+    }
 }

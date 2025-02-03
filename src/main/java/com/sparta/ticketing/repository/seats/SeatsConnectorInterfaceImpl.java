@@ -41,4 +41,9 @@ public class SeatsConnectorInterfaceImpl implements SeatsConnectorInterface {
         return seatsRepository.findFirstById(seatId)
             .orElseThrow(() -> new IllegalArgumentException("no seat found"));
     }
+
+    @Override
+    public Seats update(Seats seats) {
+        return seatsRepository.save(seats);
+    }
 }

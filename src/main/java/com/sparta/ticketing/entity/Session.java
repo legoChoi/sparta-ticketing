@@ -3,6 +3,7 @@ package com.sparta.ticketing.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -39,5 +40,8 @@ public class Session {
         this.validSeatCount = validSeatCount;
     }
 
-
+    public void countPlusMinus(boolean isPlus) {
+        if(isPlus) { ++this.validSeatCount; }
+        else { --this.validSeatCount; }
+    }
 }
