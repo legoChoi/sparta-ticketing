@@ -18,12 +18,10 @@ import java.util.List;
 public class HallController {
 
     private final HallService hallService;
-    private final SeatsService seatsService;
 
     @PostMapping
     public ResponseEntity<HallResponse> addHall(@RequestBody AddHallRequest addHallRequest) {
         HallResponse hallResponse = hallService.addHall(HallRequest.from(addHallRequest));
-        seatsService.addSeats(hallResponse.getId(), addHallRequest.getSeatNumber());
         return ResponseEntity.status(HttpStatus.CREATED).body(hallResponse);
     }
 
