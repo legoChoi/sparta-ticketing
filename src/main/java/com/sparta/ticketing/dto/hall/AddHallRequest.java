@@ -9,19 +9,16 @@ public class AddHallRequest {
 
     private final String name;
     private final String location;
-    private final int seatNumber;
 
-    public AddHallRequest(String name, String location, int seatNumber) {
+    public AddHallRequest(String name, String location) {
         this.name = name;
         this.location = location;
-        this.seatNumber = seatNumber;
     }
 
     @JsonCreator
     public static AddHallRequest from(
             @JsonProperty("name") String name,
-            @JsonProperty("location") String location,
-            @JsonProperty("seatNumber") int seatNumber) {
-        return new AddHallRequest(name, location, seatNumber);
+            @JsonProperty("location") String location) {
+        return new AddHallRequest(name, location);
     }
 }

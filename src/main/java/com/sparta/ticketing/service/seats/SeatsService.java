@@ -1,10 +1,8 @@
 package com.sparta.ticketing.service.seats;
 
 import com.sparta.ticketing.dto.seats.AllSeatsResponse;
-import com.sparta.ticketing.entity.Hall;
 import com.sparta.ticketing.entity.Seats;
 import com.sparta.ticketing.entity.Session;
-import com.sparta.ticketing.service.hall.HallConnectorInterface;
 import com.sparta.ticketing.service.session.SessionConnectorInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

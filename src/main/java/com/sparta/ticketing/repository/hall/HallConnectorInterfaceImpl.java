@@ -1,6 +1,6 @@
 package com.sparta.ticketing.repository.hall;
 
-import com.sparta.ticketing.dto.hall.HallRequest;
+import com.sparta.ticketing.dto.hall.AddHallRequest;
 import com.sparta.ticketing.entity.Hall;
 import com.sparta.ticketing.service.hall.HallConnectorInterface;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class HallConnectorInterfaceImpl implements HallConnectorInterface {
     private final HallRepository hallRepository;
 
     @Override
-    public Hall addHall(HallRequest hallRequest) {
+    public Hall addHall(AddHallRequest hallRequest) {
         Hall from = Hall.from(hallRequest);
         return hallRepository.save(from);
     }

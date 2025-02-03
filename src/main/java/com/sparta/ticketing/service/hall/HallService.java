@@ -1,6 +1,6 @@
 package com.sparta.ticketing.service.hall;
 
-import com.sparta.ticketing.dto.hall.HallRequest;
+import com.sparta.ticketing.dto.hall.AddHallRequest;
 import com.sparta.ticketing.dto.hall.HallResponse;
 import com.sparta.ticketing.entity.Hall;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.List;
 public class HallService {
     private final HallConnectorInterface hallConnectorInterface;
 
-    public HallResponse addHall(HallRequest hallRequest) {
+    public HallResponse addHall(AddHallRequest hallRequest) {
         Hall hall = hallConnectorInterface.addHall(hallRequest);
         return HallResponse.from(hall);
     }
