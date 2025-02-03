@@ -18,8 +18,8 @@ public class SessionConnectorInterfaceImpl implements SessionConnectorInterface 
 
     @Transactional
     @Override
-    public void addSession(Hall hall, Concert concert, LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        sessionRepository.save(new Session(hall, concert, startDateTime, endDateTime));
+    public void addSession(Hall hall, Concert concert, LocalDateTime startDateTime, LocalDateTime endDateTime, int validSeatCount) {
+        sessionRepository.save(new Session(hall, concert, startDateTime, endDateTime, validSeatCount));
     }
 
     @Override

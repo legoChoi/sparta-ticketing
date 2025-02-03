@@ -6,7 +6,6 @@ import com.sparta.ticketing.entity.Seats;
 import com.sparta.ticketing.entity.Session;
 import com.sparta.ticketing.repository.concert.ConcertRepository;
 import com.sparta.ticketing.repository.hall.HallRepository;
-import com.sparta.ticketing.repository.reservation.ReservationRepository;
 import com.sparta.ticketing.repository.seats.SeatsRepository;
 import com.sparta.ticketing.repository.session.SessionRepository;
 import org.junit.jupiter.api.Test;
@@ -35,6 +34,6 @@ public class DummyCreatorTest {
             seatsRepository.save(new Seats(hall, i));
         }
 
-        sessionRepository.save(new Session(hall, concert, LocalDateTime.now(), LocalDateTime.now()));
+        sessionRepository.save(new Session(hall, concert, LocalDateTime.now(), LocalDateTime.now(), 1000));
     }
 }

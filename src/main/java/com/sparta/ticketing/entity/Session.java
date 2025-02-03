@@ -28,11 +28,15 @@ public class Session {
     @Column(name = "end_date_time")
     private LocalDateTime endDateTime;
 
-    public Session(Hall hall, Concert concert, LocalDateTime startDateTime, LocalDateTime endDateTime){
+    @Column(name = "valid_seat_count")
+    private Integer validSeatCount;
+
+    public Session(Hall hall, Concert concert, LocalDateTime startDateTime, LocalDateTime endDateTime, Integer validSeatCount){
         this.hall = hall;
         this.concert = concert;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
+        this.validSeatCount = validSeatCount;
     }
 
 
