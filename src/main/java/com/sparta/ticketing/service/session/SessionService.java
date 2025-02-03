@@ -15,13 +15,12 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class SessionService implements SessionServiceInterface{
+public class SessionService{
 
     private final SessionConnectorInterface sessionConnectorInterface;
     private final HallConnectorInterface hallConnectorInterface;
     private final ConcertConnectorInterface concertConnectorInterface;
 
-    @Override
     public void addSession(AddSessionRequest addSessionRequest) {
         // TODO: exception 바꾸기
         Hall hall = hallConnectorInterface.findById(addSessionRequest.getHallId());
@@ -30,7 +29,6 @@ public class SessionService implements SessionServiceInterface{
         sessionConnectorInterface.addSession(hall, concert, addSessionRequest.getStartDateTime(), addSessionRequest.getEndDateTime());
     }
 
-    @Override
     public List<SessionResponse> getAllSessions() {
         List<Session> sessions = sessionConnectorInterface.getAllSessions();
         return sessions.stream()

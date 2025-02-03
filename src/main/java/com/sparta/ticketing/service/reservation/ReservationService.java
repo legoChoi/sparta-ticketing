@@ -5,7 +5,6 @@ import com.sparta.ticketing.entity.Reservation;
 import com.sparta.ticketing.entity.ReservationStatus;
 import com.sparta.ticketing.entity.Seats;
 import com.sparta.ticketing.entity.Session;
-import com.sparta.ticketing.repository.reservation.ReservationConnectorInterface;
 import com.sparta.ticketing.service.seats.SeatsConnectorInterface;
 import com.sparta.ticketing.service.session.SessionConnectorInterface;
 import lombok.RequiredArgsConstructor;
@@ -13,12 +12,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ReservationService implements ReservationServiceInterface {
+public class ReservationService{
     private final ReservationConnectorInterface reservationConnector;
     private final SessionConnectorInterface sessionConnector;
     private final SeatsConnectorInterface seatsConnector;
 
-    @Override
     public void addReservation(Long sessionId, Long seatId, String name) {
         ReservationStatus status = ReservationStatus.REQUEST;
         Reservation reservation = Reservation.from(status, name);
@@ -42,12 +40,10 @@ public class ReservationService implements ReservationServiceInterface {
         reservationConnector.addReservation(reservation);
     }
 
-    @Override
     public ReservationGetResponse getReservations() {
         return new ReservationGetResponse(reservationConnector.findActiveReservations());
     }
 
-    @Override
     public void cancelReservation(Long reservationId) {
         Reservation reservation = reservationConnector.findById(reservationId);
         reservationConnector.updateStatusById(reservationId, ReservationStatus.CANCEL);

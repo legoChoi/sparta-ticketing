@@ -1,4 +1,4 @@
-package com.sparta.ticketing.repository.reservation;
+package com.sparta.ticketing.service.reservation;
 
 import com.sparta.ticketing.entity.Reservation;
 import com.sparta.ticketing.entity.ReservationStatus;

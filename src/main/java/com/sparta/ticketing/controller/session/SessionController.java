@@ -2,7 +2,7 @@ package com.sparta.ticketing.controller.session;
 
 import com.sparta.ticketing.dto.session.AddSessionRequest;
 import com.sparta.ticketing.dto.session.SessionResponse;
-import com.sparta.ticketing.service.session.SessionServiceInterface;
+import com.sparta.ticketing.service.session.SessionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SessionController {
 
-    private final SessionServiceInterface sessionService;
+    private final SessionService sessionService;
 
     @PostMapping
     public ResponseEntity<String> addSession(@RequestBody AddSessionRequest addSessionRequest){

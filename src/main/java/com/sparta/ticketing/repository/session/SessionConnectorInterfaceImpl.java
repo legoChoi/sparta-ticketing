@@ -14,7 +14,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 @Component
 @RequiredArgsConstructor
-public class SessionConnentorInterfaceImpl implements SessionConnectorInterface {
+public class SessionConnectorInterfaceImpl implements SessionConnectorInterface {
     private final SessionRepository sessionRepository;
 
     @Transactional

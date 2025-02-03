@@ -11,17 +11,15 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ConcertService implements ConcertServiceInterface {
+public class ConcertService{
     private final ConcertConnectorInterface concertConnectorInterface;
 
     @Transactional
-    @Override
     public void addConcert(AddConcertRequest addConcertRequest) {
         concertConnectorInterface.addConcert(addConcertRequest.getName());
     }
 
     @Transactional(readOnly = true)
-    @Override
     public List<ConcertResponse> getAllConcerts() {
         List<Concert> concerts = concertConnectorInterface.getAllConcerts();
         return concerts.stream()

@@ -2,7 +2,7 @@ package com.sparta.ticketing.controller.reservation;
 
 import com.sparta.ticketing.dto.reservation.ReservationGetResponse;
 import com.sparta.ticketing.dto.reservation.ReservationPostRequest;
-import com.sparta.ticketing.service.reservation.ReservationServiceInterface;
+import com.sparta.ticketing.service.reservation.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ import java.net.URI;
 @RequiredArgsConstructor
 @RequestMapping("/reservations")
 public class ReservationController {
-    private final ReservationServiceInterface service;
+    private final ReservationService service;
 
     @PostMapping
     public ResponseEntity<String> postReservation(@RequestBody ReservationPostRequest dto) {
