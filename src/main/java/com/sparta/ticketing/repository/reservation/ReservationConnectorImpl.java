@@ -5,13 +5,11 @@ import com.sparta.ticketing.entity.ReservationStatus;
 import com.sparta.ticketing.service.reservation.ReservationConnectorInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-@Transactional
 public class ReservationConnectorImpl implements ReservationConnectorInterface {
     private final ReservationRepository reservationRepository;
 

@@ -8,15 +8,19 @@ import com.sparta.ticketing.entity.Session;
 import com.sparta.ticketing.service.seats.SeatsConnectorInterface;
 import com.sparta.ticketing.service.session.SessionConnectorInterface;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ReservationService{
     private final ReservationConnectorInterface reservationConnector;
     private final SessionConnectorInterface sessionConnector;
     private final SeatsConnectorInterface seatsConnector;
 
+    @Transactional
     public void addReservation(Long sessionId, Long seatId, String name) {
         ReservationStatus status = ReservationStatus.REQUEST;
         Reservation reservation = Reservation.from(status, name);
@@ -33,6 +37,7 @@ public class ReservationService{
             status = purchase();
 
         } catch (Exception e) {
+            log.error(e.getMessage());
             status = ReservationStatus.FAIL;
         }
 
@@ -44,6 +49,7 @@ public class ReservationService{
         return new ReservationGetResponse(reservationConnector.findActiveReservations());
     }
 
+    @Transactional
     public void cancelReservation(Long reservationId) {
         Reservation reservation = reservationConnector.findById(reservationId);
         reservationConnector.updateStatusById(reservationId, ReservationStatus.CANCEL);
@@ -53,9 +59,9 @@ public class ReservationService{
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
-            return ReservationStatus.SUCCESS;
+            log.info(e.getMessage());
         }
-        throw new IllegalStateException("결제 실패");
+        return ReservationStatus.SUCCESS;
     }
 
     private void checkAlreadyReserved(Long sessionId, Long seatId) {
