@@ -2,6 +2,7 @@ package com.sparta.ticketing.controller.concert;
 
 import com.sparta.ticketing.dto.concert.AddConcertRequest;
 import com.sparta.ticketing.dto.concert.ConcertResponse;
+import com.sparta.ticketing.service.concert.ConcertConnectorInterface;
 import com.sparta.ticketing.service.concert.ConcertServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,6 @@ public class ConcertController {
 
     private final ConcertServiceInterface concertService;
 
-    //post 공연 등록 201 created
     @PostMapping
     public ResponseEntity<String> addConcert(@RequestBody AddConcertRequest addConcertRequest){
         concertService.addConcert(addConcertRequest);

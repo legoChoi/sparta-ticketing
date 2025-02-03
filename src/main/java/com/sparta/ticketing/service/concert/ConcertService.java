@@ -14,17 +14,18 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ConcertService implements ConcertServiceInterface {
     private final ConcertRepository concertRepository;
+    private final ConcertConnectorInterface concertConnectorInterface;
 
     @Transactional
     @Override
     public void addConcert(AddConcertRequest addConcertRequest) {
-        concertRepository.save(new Concert(addConcertRequest.getName()));
+        concertConnectorInterface.addConcert(addConcertRequest.getName());
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<ConcertResponse> getAllConcerts() {
-        List<Concert> concerts = concertRepository.findAll();
+        List<Concert> concerts = concertConnectorInterface.getAllConcerts();
         return concerts.stream()
                 .map(concert -> new ConcertResponse(concert.getName()))
                 .collect(Collectors.toList());
