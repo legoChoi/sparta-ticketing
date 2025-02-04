@@ -11,12 +11,12 @@ import java.util.concurrent.TimeUnit;
 public class RedisLockService {
     private final RedisTemplate<String, String> redisTemplate;
 
-    private static final long LOCK_TIMEOUT = 10000L;  // 락 유효 시간 (밀리초)
+    // 각 서비스 메서드마다 락 유효 시간을 애노테이션으로 설정할 수 있도록 필드 제거
 
     // 락을 획득하는 메서드
     // 각 회차 및 좌석 별로 별도의 lock이 적용되도록 생성된 key를 전달받음
-    public boolean acquireLock(String lockKey, String lockValue) {
-        Boolean isLocked = redisTemplate.opsForValue().setIfAbsent(lockKey, lockValue, LOCK_TIMEOUT, TimeUnit.MILLISECONDS);
+    public boolean acquireLock(String lockKey, String lockValue, long timeout) {
+        Boolean isLocked = redisTemplate.opsForValue().setIfAbsent(lockKey, lockValue, timeout, TimeUnit.MILLISECONDS);
         return Boolean.TRUE.equals(isLocked);
     }
 

@@ -1,5 +1,6 @@
 package com.sparta.ticketing.service.reservation;
 
+import com.sparta.ticketing.annotation.RedisLock;
 import com.sparta.ticketing.dto.reservation.ReservationGetResponse;
 import com.sparta.ticketing.entity.Reservation;
 import com.sparta.ticketing.entity.ReservationStatus;
@@ -24,23 +25,10 @@ public class ReservationService{
     private final ReservationConnectorInterface reservationConnector;
     private final SessionConnectorInterface sessionConnector;
     private final SeatsConnectorInterface seatsConnector;
-    private final RedisLockService redisLockService;
 
     @Transactional
+    @RedisLock(key = "'lock:session:' + #sessionId + ':seat:' + #seatId")
     public void addReservation(Long sessionId, Long seatId, String name) {
-        String lockKey = String.format("lock:session:%d:seat:%d", sessionId, seatId);
-        String lockVal = UUID.randomUUID().toString();
-        acquireLock(lockKey, lockVal);
-
-        // 트랜잭션 종료 후 락 해제를 위한 동기화 등록
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
-            @Override
-            public void afterCompletion(int status) {
-                redisLockService.releaseLock(lockKey, lockVal);
-            }
-            // 필요에 따라 다른 콜백 메서드들도 구현 가능
-        });
-
         ReservationStatus status = ReservationStatus.REQUEST;
         Reservation reservation = Reservation.from(status, name);
         checkAlreadyReserved(sessionId, seatId);
@@ -92,31 +80,6 @@ public class ReservationService{
     private void checkAlreadyReserved(Long sessionId, Long seatId) {
         if(reservationConnector.alreadyReserved(sessionId, seatId)) {
             throw new IllegalArgumentException("Already booked seats");
-        }
-    }
-
-    private void acquireLock(String lockKey, String lockVal) {
-        // Deadlock 상태에 빠지지 않도록 최대 대기 시간을 설정
-        int retryCount = 0;
-        int maxRetry = 3;
-        long retryDelay = 100L;
-
-        boolean lockAcquired = redisLockService.acquireLock(lockKey, lockVal);
-
-        // 최대 대기 시간이 설정된 Spin Lock
-        while (!lockAcquired && retryCount < maxRetry) {
-            ++retryCount;
-            log.debug("repeat count: {}", retryCount);
-
-            try {
-                Thread.sleep(retryDelay);
-            } catch (InterruptedException e) {
-                log.info("Thread Interrupted");
-            }
-            lockAcquired = redisLockService.acquireLock(lockKey, lockVal);
-        }
-        if (!lockAcquired) {
-            throw new RuntimeException("락 획득에 실패했습니다.");
         }
     }
 }
