@@ -31,5 +31,7 @@ public class Seats {
         return new Seats(session, seatNumber);
     }
 
-    public void swapAvailability() { this.isAvailable = !this.isAvailable; }
+    public void swapAvailability() {
+        this.isAvailable = !this.isAvailable;
+    }
 }

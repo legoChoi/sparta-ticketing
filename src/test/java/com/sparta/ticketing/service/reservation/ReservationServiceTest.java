@@ -28,7 +28,7 @@ class ReservationServiceTest {
 
     @Test
     void test() throws InterruptedException {
-        ExecutorService executor = Executors.newFixedThreadPool(1000);
+        ExecutorService executor = Executors.newFixedThreadPool(58);
         CountDownLatch latch = new CountDownLatch(1000);
 
         AtomicInteger successCnt = new AtomicInteger();

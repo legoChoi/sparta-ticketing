@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -23,30 +25,25 @@ public class ReservationService{
     @Transactional
     public void addReservation(Long sessionId, Long seatId, String name) {
         // session, seats repository에서 각각을 조회하기
-        checkAlreadyReserved(sessionId, seatId);
+            checkAlreadyReserved(sessionId, seatId);
 
-        Session session = sessionConnector.findById(sessionId);
-        Seats seat = seatsConnector.findById(seatId);
+            Session session = sessionConnector.findById(sessionId);
+            Seats seat = seatsConnector.findById(seatId);
 
-        ReservationStatus status = ReservationStatus.REQUEST;
-        Reservation reservation = Reservation.from(status, name);
-        reservation.setSession(session);
-        reservation.setSeats(seat);
+            ReservationStatus status = ReservationStatus.REQUEST;
+            Reservation reservation = Reservation.from(status, name);
+            reservation.setSession(session);
+            reservation.setSeats(seat);
 
-        status = ReservationStatus.SUCCESS;
-        //status = purchase();
-//
-//        try {
-//        } catch (Exception e) {
-//            log.error(e.getMessage());
-//            status = ReservationStatus.FAIL;
-//        }
 
-        reservation.setStatus(status);
+            status = ReservationStatus.SUCCESS;
 
-        reservationConnector.addReservation(reservation);
-        // 회차 좌석 수 +, 좌석 예약 여부 true
-        swapSeatAvailability(reservation.getSession(), reservation.getSeats());
+            reservation.setStatus(status);
+
+            reservationConnector.addReservation(reservation);
+
+            seat.swapAvailability();
+            session.countPlusMinus(seat.isAvailable());
     }
 
     public ReservationGetResponse getReservations() {
@@ -56,15 +53,22 @@ public class ReservationService{
     @Transactional
     public void cancelReservation(Long reservationId) {
         Reservation reservation = reservationConnector.findById(reservationId);
+
         reservationConnector.updateStatusById(reservationId, ReservationStatus.CANCEL);
         // 회차 좌석 수 -, 좌석 예약 여부 false
-        swapSeatAvailability(reservation.getSession(), reservation.getSeats());
+        //swapSeatAvailability(reservation.getSession(), reservation.getSeats());
+        reservation.getSeats().swapAvailability();
+        reservation.getSession().countPlusMinus(reservation.getSeats().isAvailable());
+    }
+
+    private boolean isDelete(Reservation reservation) {
+        return reservation.getStatus().equals(ReservationStatus.CANCEL);
     }
 
     @Transactional
     public void swapSeatAvailability(Session session, Seats seats) {
-        session.countPlusMinus(seats.isAvailable());
         seats.swapAvailability();
+        session.countPlusMinus(seats.isAvailable());
         sessionConnector.update(session);
         seatsConnector.update(seats);
     }
