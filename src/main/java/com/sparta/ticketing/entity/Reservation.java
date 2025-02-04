@@ -18,6 +18,7 @@ public class Reservation {
     private ReservationStatus status;
 
     private String userName;
+    //여기 유저entity로 변경 예정
 
     @Setter
     @JoinColumn(name = "session_id")
