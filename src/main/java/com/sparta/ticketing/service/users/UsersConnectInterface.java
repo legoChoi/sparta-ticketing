@@ -7,4 +7,6 @@ import org.springframework.stereotype.Component;
 @Component
 public interface UsersConnectInterface {
     Users addUsers(UsersRequest usersRequest);
+
+    Users getUser(Long id);
 }
