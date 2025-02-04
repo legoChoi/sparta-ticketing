@@ -98,14 +98,16 @@ public class ReservationService{
     private void acquireLock(String lockKey, String lockVal) {
         // Deadlock 상태에 빠지지 않도록 최대 대기 시간을 설정
         int retryCount = 0;
-        int maxRetry = 50;
-        long retryDelay = 50L;
+        int maxRetry = 3;
+        long retryDelay = 100L;
 
         boolean lockAcquired = redisLockService.acquireLock(lockKey, lockVal);
 
         // 최대 대기 시간이 설정된 Spin Lock
         while (!lockAcquired && retryCount < maxRetry) {
             ++retryCount;
+            log.debug("repeat count: {}", retryCount);
+
             try {
                 Thread.sleep(retryDelay);
             } catch (InterruptedException e) {
