@@ -35,11 +35,11 @@ public class DummyCreatorTest {
         hallRepository.save(hall);
 
         Session session = new Session(hall, concert, LocalDateTime.now(), LocalDateTime.now(),10);
+        sessionRepository.save(session);
 
         for (int i = 1; i <= 10; i++) {
             seatsRepository.save(new Seats(session, i));
         }
 
-        sessionRepository.save(session);
     }
 }

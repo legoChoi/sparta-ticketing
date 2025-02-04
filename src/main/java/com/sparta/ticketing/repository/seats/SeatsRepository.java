@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SeatsRepository extends JpaRepository<Seats, Long> {
-    @Query("SELECT s from Seats s join fetch s.hall h where h.id = :hallId")
-    public List<Seats> findAllByHallId(long hallId);
+    @Query("SELECT s from Seats s join fetch s.session h where h.id = :sessionId")
+    public List<Seats> findAllBySessionId(long sessionId);
 
-    @Query("select s from Seats s join fetch s.hall h where s.id = :seatId")
+    @Query("select s from Seats s join fetch s.session h where s.id = :seatId")
     public Optional<Seats> findFirstById(@Param("seatId") Long seatId);
 }

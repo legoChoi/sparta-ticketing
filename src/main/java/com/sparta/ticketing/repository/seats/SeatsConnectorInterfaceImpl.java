@@ -6,7 +6,6 @@ import com.sparta.ticketing.service.seats.SeatsConnectorInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class SeatsConnectorInterfaceImpl implements SeatsConnectorInterface {
 
     @Override
     public List<Seats> findAll(long hallId) {
-        return seatsRepository.findAllByHallId(hallId);
+        return seatsRepository.findAllBySessionId(hallId);
     }
 
     @Override
