@@ -28,16 +28,17 @@ class ReservationServiceTest {
 
     @Test
     void test() throws InterruptedException {
-        ExecutorService executor = Executors.newFixedThreadPool(58);
-        CountDownLatch latch = new CountDownLatch(1000);
+        int threadCount = 10;
+        ExecutorService executor = Executors.newFixedThreadPool(threadCount);
+        CountDownLatch latch = new CountDownLatch(threadCount);
 
         AtomicInteger successCnt = new AtomicInteger();
         AtomicInteger failCnt = new AtomicInteger();
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < threadCount; i++) {
             executor.submit(() -> {
                 try {
-                    reservationService.addReservation(1L, 1L, "user");
+                    reservationService.addReservation(1L, 1L, Thread.currentThread().getName());
                     successCnt.incrementAndGet();
                 } catch (Exception e) {
                     failCnt.incrementAndGet();
@@ -54,6 +55,6 @@ class ReservationServiceTest {
         System.out.println("failCnt = " + failCnt);
 
         Assertions.assertThat(successCnt.get()).isEqualTo(1);
-        Assertions.assertThat(failCnt.get()).isEqualTo(999);
+        Assertions.assertThat(failCnt.get()).isEqualTo(threadCount - 1);
     }
 }

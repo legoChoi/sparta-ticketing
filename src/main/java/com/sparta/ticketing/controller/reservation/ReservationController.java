@@ -27,7 +27,7 @@ public class ReservationController {
     }
 
     @DeleteMapping("/{reservationId}")
-    public ResponseEntity<String> deleteReservation(@PathVariable Long reservationId) {
+    public ResponseEntity<String> deleteReservation(@PathVariable("reservationId") Long reservationId) {
         service.cancelReservation(reservationId);
         return ResponseEntity.ok("삭제 완료");
     }

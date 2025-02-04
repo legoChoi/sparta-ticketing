@@ -11,6 +11,8 @@ import com.sparta.ticketing.repository.session.SessionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -23,6 +25,8 @@ public class DummyCreatorTest {
     @Autowired SessionRepository sessionRepository;
 
     @Test
+    @Transactional
+    @Commit
     void createDummy() {
         Concert concert = new Concert("concert");
         concertRepository.save(concert);
