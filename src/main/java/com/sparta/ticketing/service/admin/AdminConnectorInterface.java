@@ -13,4 +13,6 @@ public interface AdminConnectorInterface {
     AdminUser updateAdmin(UpdateAdminRequest adminRequest);
 
     void deleteAdmin(Long id);
+
+    AdminUser findByAdminCode(String adminCode);
 }

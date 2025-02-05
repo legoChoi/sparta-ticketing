@@ -42,6 +42,11 @@ public class AdminConnectorInterfaceImpl implements AdminConnectorInterface {
         adminRepository.deleteById(id);
     }
 
+    @Override
+    public AdminUser findByAdminCode(String adminCode) {
+        return adminRepository.findByAdminCode(adminCode).orElseThrow(()->new IllegalArgumentException("유효하지않은 관리자코드"));
+    }
+
     private AdminUser findById(long adminId) {
         return adminRepository.findById(adminId).orElseThrow(() -> new IllegalArgumentException("관리자 계정을 찾을수 없음"));
     }

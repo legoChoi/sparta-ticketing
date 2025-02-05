@@ -16,4 +16,6 @@ public interface UserConnectInterface {
     User findById(Long id);
 
     void deleteUser(Long id);
+
+    User findByName(String name);
 }

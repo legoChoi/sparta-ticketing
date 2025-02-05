@@ -54,4 +54,9 @@ public class UserConnectorInterfaceImpl implements UserConnectInterface {
         User user = findById(id);
         user.deleteUser();
     }
+
+    @Override
+    public User findByName(String name) {
+        return userRepository.findByName(name).orElseThrow(()-> new IllegalArgumentException("노유저"));
+    }
 }
