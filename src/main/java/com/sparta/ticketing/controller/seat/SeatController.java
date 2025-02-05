@@ -1,7 +1,7 @@
-package com.sparta.ticketing.controller.seats;
+package com.sparta.ticketing.controller.seat;
 
-import com.sparta.ticketing.dto.seats.AllSeatsResponse;
-import com.sparta.ticketing.service.seats.SeatsService;
+import com.sparta.ticketing.dto.seat.AllSeatResponse;
+import com.sparta.ticketing.service.seat.SeatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +15,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/seats")
 @RequiredArgsConstructor
-public class SeatsController {
-    private final SeatsService seatsService;
+public class SeatController {
+    private final SeatService seatsService;
 
     @GetMapping("/{sessionId}")
-    public ResponseEntity<List<AllSeatsResponse>> getAllSeats(@PathVariable long sessionId) {
-        List<AllSeatsResponse> all = seatsService.getAll(sessionId);
+    public ResponseEntity<List<AllSeatResponse>> getAllSeats(@PathVariable long sessionId) {
+        List<AllSeatResponse> all = seatsService.getAll(sessionId);
         return ResponseEntity.status(HttpStatus.OK).body(all);
     }
 }

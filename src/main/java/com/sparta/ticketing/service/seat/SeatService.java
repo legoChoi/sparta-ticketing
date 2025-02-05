@@ -1,6 +1,6 @@
-package com.sparta.ticketing.service.seats;
+package com.sparta.ticketing.service.seat;
 
-import com.sparta.ticketing.dto.seats.AllSeatsResponse;
+import com.sparta.ticketing.dto.seat.AllSeatResponse;
 import com.sparta.ticketing.entity.Seat;
 import com.sparta.ticketing.entity.Session;
 import com.sparta.ticketing.service.session.SessionConnectorInterface;
@@ -12,8 +12,8 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class SeatsService {
-    private final SeatsConnectorInterface seatsConnectorInterface;
+public class SeatService {
+    private final SeatConnectorInterface seatsConnectorInterface;
     private final SessionConnectorInterface sessionConnectorInterface;
 
     public void addSeats(long sessionId, int seatNumber) {
@@ -25,8 +25,8 @@ public class SeatsService {
         seatsConnectorInterface.saveAll(seats);
     }
 
-    public List<AllSeatsResponse> getAll(long hallId) {
+    public List<AllSeatResponse> getAll(long hallId) {
         List<Seat> all = seatsConnectorInterface.findAll(hallId);
-        return all.stream().map(AllSeatsResponse::from).toList();
+        return all.stream().map(AllSeatResponse::from).toList();
     }
 }

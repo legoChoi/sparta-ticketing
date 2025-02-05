@@ -6,7 +6,7 @@ import com.sparta.ticketing.entity.Reservation;
 import com.sparta.ticketing.entity.ReservationStatus;
 import com.sparta.ticketing.entity.Seat;
 import com.sparta.ticketing.entity.Session;
-import com.sparta.ticketing.service.seats.SeatsConnectorInterface;
+import com.sparta.ticketing.service.seat.SeatConnectorInterface;
 import com.sparta.ticketing.service.session.SessionConnectorInterface;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReservationService{
     private final ReservationConnectorInterface reservationConnector;
     private final SessionConnectorInterface sessionConnector;
-    private final SeatsConnectorInterface seatsConnector;
+    private final SeatConnectorInterface seatsConnector;
 
     @Transactional
     @RedisLock(key = "'lock:session:' + #sessionId + ':seat:' + #seatId")

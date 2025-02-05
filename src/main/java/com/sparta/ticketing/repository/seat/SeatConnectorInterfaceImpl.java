@@ -1,8 +1,8 @@
-package com.sparta.ticketing.repository.seats;
+package com.sparta.ticketing.repository.seat;
 
-import com.sparta.ticketing.dto.seats.SeatsDto;
+import com.sparta.ticketing.dto.seat.SeatDto;
 import com.sparta.ticketing.entity.Seat;
-import com.sparta.ticketing.service.seats.SeatsConnectorInterface;
+import com.sparta.ticketing.service.seat.SeatConnectorInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -11,12 +11,12 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class SeatsConnectorInterfaceImpl implements SeatsConnectorInterface {
+public class SeatConnectorInterfaceImpl implements SeatConnectorInterface {
     private final JdbcTemplate jdbcTemplate;
-    private final SeatsRepository seatsRepository;
+    private final SeatRepository seatsRepository;
 
     @Override
-    public void bulkInsertSeats(List<SeatsDto> seatsDto) {
+    public void bulkInsertSeats(List<SeatDto> seatsDto) {
         String sql = "INSERT INTO seats (hall_id, seat_number) VALUES (?,?)";
         jdbcTemplate.batchUpdate(sql, seatsDto, 1000, (ps, dto) -> {
             ps.setLong(1, dto.getHallId());

@@ -1,13 +1,13 @@
-package com.sparta.ticketing.dto.seats;
+package com.sparta.ticketing.dto.seat;
 
 import lombok.Getter;
 
 @Getter
-public class SeatsDto {
+public class SeatDto {
     private long hallId;
     private int seatNumber;
 
-    public SeatsDto(long hallId, int i) {
+    public SeatDto(long hallId, int i) {
         this.hallId = hallId;
         this.seatNumber = i;
     }

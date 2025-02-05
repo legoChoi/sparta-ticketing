@@ -6,7 +6,7 @@ import com.sparta.ticketing.entity.Seat;
 import com.sparta.ticketing.entity.Session;
 import com.sparta.ticketing.repository.concert.ConcertRepository;
 import com.sparta.ticketing.repository.hall.HallRepository;
-import com.sparta.ticketing.repository.seats.SeatsRepository;
+import com.sparta.ticketing.repository.seat.SeatRepository;
 import com.sparta.ticketing.repository.session.SessionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,8 @@ public class DummyCreatorTest {
 
     @Autowired ConcertRepository concertRepository;
     @Autowired HallRepository hallRepository;
-    @Autowired SeatsRepository seatsRepository;
+    @Autowired
+    SeatRepository seatsRepository;
     @Autowired SessionRepository sessionRepository;
 
     @Test
