@@ -1,7 +1,7 @@
 package com.sparta.ticketing.service.board;
 
 import com.sparta.ticketing.dto.board.BoardRequest;
-import com.sparta.ticketing.dto.board.BoardResponse;
+import com.sparta.ticketing.dto.board.BoardUpdateRequest;
 import com.sparta.ticketing.entity.Board;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ public interface BoardConnectorInterface {
 
     Board findById(Long boardId);
 
-    Board updateBoard(BoardRequest boardRequest, Long id);
+    Board updateBoard(BoardUpdateRequest boardRequest, Long id);
 
     void deleteBoard(Long boardId, Long userId);
 }

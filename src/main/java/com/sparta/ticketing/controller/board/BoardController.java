@@ -2,6 +2,7 @@ package com.sparta.ticketing.controller.board;
 
 import com.sparta.ticketing.dto.board.BoardRequest;
 import com.sparta.ticketing.dto.board.BoardResponse;
+import com.sparta.ticketing.dto.board.BoardUpdateRequest;
 import com.sparta.ticketing.service.board.BoardService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class BoardController {
 
     @PatchMapping
     public ResponseEntity<BoardResponse> updateBoard(
-            @RequestBody BoardRequest boardRequest,
+            @RequestBody BoardUpdateRequest boardRequest,
             HttpServletRequest httpServletRequest
     ) {
         Long id = (Long) httpServletRequest.getAttribute("userId");

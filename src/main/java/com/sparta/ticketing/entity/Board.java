@@ -1,5 +1,6 @@
 package com.sparta.ticketing.entity;
 
+import com.sparta.ticketing.dto.board.BoardRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,18 @@ public class Board {
         this.contents = contents;
     }
 
-    public static Board from() {
-        return new Board();
+    public static Board from(BoardRequest boardRequest, User user) {
+        return new Board(
+                user,
+                boardRequest.getTitle(),
+                boardRequest.getContents());
+    }
+
+    public void updateTitle(String title) {
+        this.title = title;
+    }
+
+    public void updateContents(String contents) {
+        this.contents = contents;
     }
 }
