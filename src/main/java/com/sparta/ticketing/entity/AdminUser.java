@@ -28,7 +28,15 @@ public class AdminUser {
         this.password = password;
     }
 
-    public static AdminUser from() {
+    public static AdminUser from(String adminCode, String encodedPassword) {
         return new AdminUser();
+    }
+
+    public void updateAdminCode(String adminCode) {
+        this.adminCode = adminCode;
+    }
+
+    public void updatePassword(String encodePassword) {
+        this.password = encodePassword;
     }
 }
