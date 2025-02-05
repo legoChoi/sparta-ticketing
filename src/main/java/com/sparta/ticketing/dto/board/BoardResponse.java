@@ -5,16 +5,18 @@ import lombok.Getter;
 
 @Getter
 public class BoardResponse {
-    private String title;
-    private String contents;
+    private final Long boardId;
+    private final String title;
+    private final String contents;
 
 
-    public BoardResponse(String title, String contents) {
+    public BoardResponse(Long boardId, String title, String contents) {
+        this.boardId = boardId;
         this.title = title;
         this.contents = contents;
     }
 
     public static BoardResponse from(Board board) {
-        return new BoardResponse(board.getTitle(), board.getContents());
+        return new BoardResponse(board.getId(),board.getTitle(), board.getContents());
     }
 }
