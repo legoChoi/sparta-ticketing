@@ -1,5 +1,6 @@
 package com.sparta.ticketing.controller.board;
 
+import com.sparta.ticketing.dto.board.BoardListResponse;
 import com.sparta.ticketing.dto.board.BoardRequest;
 import com.sparta.ticketing.dto.board.BoardResponse;
 import com.sparta.ticketing.dto.board.BoardUpdateRequest;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/board")
@@ -32,6 +35,13 @@ public class BoardController {
     public ResponseEntity<BoardResponse> getBoard(@PathVariable Long boardId) {
         BoardResponse boardResponse = boardService.getBoard(boardId);
         return ResponseEntity.status(HttpStatus.OK).body(boardResponse);
+    }
+
+    @GetMapping
+    public ResponseEntity<BoardListResponse> getAllBoard() {
+        List<BoardResponse> boardResponses = boardService.getAllBoard();
+        BoardListResponse boardList = BoardListResponse.from(boardResponses);
+        return ResponseEntity.status(HttpStatus.OK).body(boardList);
     }
 
     @PatchMapping

@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class BoardConnectorInterfaceImpl implements BoardConnectorInterface {
@@ -50,6 +52,11 @@ public class BoardConnectorInterfaceImpl implements BoardConnectorInterface {
     public void deleteBoard(Long boardId, Long userId) {
         Board board = getBoard(boardId, boardId);
         boardRepository.delete(board);
+    }
+
+    @Override
+    public List<Board> findAll() {
+        return boardRepository.findAll();
     }
 
     private Board getBoard(long boardId, Long id) {

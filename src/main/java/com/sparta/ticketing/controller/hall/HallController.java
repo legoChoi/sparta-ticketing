@@ -1,6 +1,7 @@
 package com.sparta.ticketing.controller.hall;
 
 import com.sparta.ticketing.dto.hall.AddHallRequest;
+import com.sparta.ticketing.dto.hall.HallListResponse;
 import com.sparta.ticketing.dto.hall.HallResponse;
 import com.sparta.ticketing.service.hall.HallService;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,9 @@ public class HallController {
     }
 
     @GetMapping
-    public ResponseEntity<List<HallResponse>> getAllHall() {
+    public ResponseEntity<HallListResponse> getAllHall() {
         List<HallResponse> allHall = hallService.getAllHall();
-        return ResponseEntity.status(HttpStatus.OK).body(allHall);
+        HallListResponse hallListResponse = HallListResponse.from(allHall);
+        return ResponseEntity.status(HttpStatus.OK).body(hallListResponse);
     }
 }

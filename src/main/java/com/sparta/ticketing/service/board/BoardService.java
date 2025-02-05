@@ -7,6 +7,8 @@ import com.sparta.ticketing.entity.Board;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class BoardService {
@@ -31,5 +33,10 @@ public class BoardService {
 
     public void deleteBoard(Long boardId, Long userId) {
         boardConnectorInterface.deleteBoard(boardId, userId);
+    }
+
+    public List<BoardResponse> getAllBoard() {
+        List<Board> boards = boardConnectorInterface.findAll();
+        return boards.stream().map(BoardResponse::from).toList();
     }
 }
