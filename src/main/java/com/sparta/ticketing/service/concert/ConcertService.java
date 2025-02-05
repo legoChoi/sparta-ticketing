@@ -7,8 +7,8 @@ import com.sparta.ticketing.dto.concert.GetBestConcertResponse;
 import com.sparta.ticketing.dto.concert.GetConcertResponse;
 import com.sparta.ticketing.entity.Concert;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +22,10 @@ import java.util.stream.Collectors;
 public class ConcertService{
     private final ConcertConnectorInterface concertConnectorInterface;
 
+    @CacheEvict(value = "concertCache", key = "#request.getName()")
     @Transactional
-    public void addConcert(AddConcertRequest addConcertRequest) {
-        concertConnectorInterface.addConcert(addConcertRequest.getName());
+    public void addConcert(AddConcertRequest request) {
+        concertConnectorInterface.addConcert(request.getName());
     }
 
     public List<GetConcertResponse> cachingSearchConcert(String name, int page, int size) {
@@ -47,7 +48,6 @@ public class ConcertService{
     }
 
     @RedisLock(key = "'lock:concert:' + #concertId")
-
     public GetConcertResponse getConcert(Long concertId) {
         Concert concert = concertConnectorInterface.findById(concertId);
         concert.incrementCount();
