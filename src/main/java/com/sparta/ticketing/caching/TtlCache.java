@@ -1,12 +1,10 @@
 package com.sparta.ticketing.caching;
 
 import org.springframework.cache.concurrent.ConcurrentMapCache;
-import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Component
 public class TtlCache extends ConcurrentMapCache {
     private final Map<Object, Long> cacheTimestamps = new ConcurrentHashMap<>();
     private static final long TTL = 60 * 1000; // 60초 TTL
