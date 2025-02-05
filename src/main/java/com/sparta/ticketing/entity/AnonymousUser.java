@@ -24,7 +24,7 @@ public class AnonymousUser {
         this.password = password;
     }
 
-    public static AnonymousUser from() {
-        return new AnonymousUser();
+    public static AnonymousUser from(String nickname, String encodePassword) {
+        return new AnonymousUser(nickname,encodePassword);
     }
 }

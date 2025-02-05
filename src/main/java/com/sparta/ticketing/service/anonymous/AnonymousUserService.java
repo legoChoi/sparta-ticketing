@@ -9,15 +9,15 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AnonymousUserService {
-    private final AnonymousUserConnectorInterface anInterface;
+    private final AnonymousUserConnectorInterface anonymousUserConnectorInterface;
 
     public AnonymousUserResponse addAnonymousUser(AnonymousUserRequest anonymousUserRequest){
-        AnonymousUser anonymousUserResponse = anInterface.addAnonymousUser(anonymousUserRequest);
+        AnonymousUser anonymousUserResponse = anonymousUserConnectorInterface.addAnonymousUser(anonymousUserRequest);
 
         return AnonymousUserResponse.from(anonymousUserResponse);
     }
 
     public void deleteAnonymousUser(AnonymousUserRequest anonymousUserRequest) {
-        anInterface.deleteAnonymousUser(anonymousUserRequest);
+        anonymousUserConnectorInterface.deleteAnonymousUser(anonymousUserRequest);
     }
 }
