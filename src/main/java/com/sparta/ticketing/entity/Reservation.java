@@ -20,22 +20,22 @@ public class Reservation {
     private String userName;
     //여기 유저entity로 변경 예정
 
-    @Setter
     @JoinColumn(name = "session_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Session session;
 
-    @Setter
     @JoinColumn(name = "seats_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Seat seats;
 
-    private Reservation(ReservationStatus status, String userName) {
+    private Reservation(ReservationStatus status, String userName, Session session, Seat seats) {
         this.status = status;
         this.userName = userName;
+        this.session = session;
+        this.seats = seats;
     }
 
-    public static Reservation from(ReservationStatus status, String userName) {
-        return new Reservation(status, userName);
+    public static Reservation from(ReservationStatus status, String userName, Session session, Seat seats) {
+        return new Reservation(status, userName, session, seats);
     }
 }

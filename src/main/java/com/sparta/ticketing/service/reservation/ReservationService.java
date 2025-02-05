@@ -25,13 +25,9 @@ public class ReservationService{
     @RedisLock(key = "'lock:session:' + #sessionId + ':seat:' + #seatId")
     public void addReservation(Long sessionId, Long seatId, String name) {
         ReservationStatus status = ReservationStatus.REQUEST;
-        Reservation reservation = Reservation.from(status, name);
-        checkAlreadyReserved(sessionId, seatId);
         Session session = sessionConnector.findById(sessionId);
         Seat seat = seatsConnector.findById(seatId);
-
-        reservation.setSession(session);
-        reservation.setSeats(seat);
+        Reservation reservation = Reservation.from(status, name, session, seat);
 
         //status = ReservationStatus.SUCCESS;
         status = purchase();
@@ -50,16 +46,14 @@ public class ReservationService{
     @Transactional
     public void cancelReservation(Long reservationId) {
         Reservation reservation = reservationConnector.findById(reservationId);
-        reservationConnector.updateStatusById(reservationId, ReservationStatus.CANCEL);
+        reservation.setStatus(ReservationStatus.CANCEL);
         // 회차 좌석 수 -, 좌석 예약 여부 false
         swapSeatAvailability(reservation.getSession(), reservation.getSeats());
     }
 
-    private void swapSeatAvailability(Session session, Seat seats) {
-        seats.swapAvailability();
-        session.countPlusMinus(seats.isAvailable());
-        sessionConnector.update(session);
-        seatsConnector.update(seats);
+    private void swapSeatAvailability(Session session, Seat seat) {
+        seat.swapAvailability();
+        session.countPlusMinus(seat.isAvailable());
     }
 
     private ReservationStatus purchase() {
@@ -72,9 +66,4 @@ public class ReservationService{
         return ReservationStatus.SUCCESS;
     }
 
-    private void checkAlreadyReserved(Long sessionId, Long seatId) {
-        if(reservationConnector.alreadyReserved(sessionId, seatId)) {
-            throw new IllegalArgumentException("Already booked seats");
-        }
-    }
 }

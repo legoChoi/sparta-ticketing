@@ -7,23 +7,19 @@ import lombok.Getter;
 @Getter
 public class UserRequest {
 
-    private String originalPassword;
-
     private String name;
 
     private String password;
 
-    public UserRequest(String originalPassword, String name, String password) {
+    public UserRequest(String name, String password) {
         this.name = name;
         this.password = password;
-        this.originalPassword = originalPassword;
     }
 
     @JsonCreator
     public static UserRequest from(
-            @JsonProperty("originalPassword") String originalPassword,
             @JsonProperty("name") String name,
             @JsonProperty("password") String password) {
-        return new UserRequest(originalPassword,name, password);
+        return new UserRequest(name, password);
     }
 }

@@ -1,8 +1,10 @@
 package com.sparta.ticketing.controller.user;
 
 import com.sparta.ticketing.dto.user.UserRequest;
+import com.sparta.ticketing.dto.user.UserUpdateRequest;
 import com.sparta.ticketing.dto.user.UserResponse;
 import com.sparta.ticketing.service.user.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +33,13 @@ public class UserController {
 
 
     @PatchMapping
-    public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest usersRequest) {
-        UserResponse usersResponse = usersService.updateUser(usersRequest);
+    public ResponseEntity<UserResponse> updateUser(
+            @RequestBody UserRequest usersRequest,
+            HttpServletRequest httpServletRequest
+            ) {
+        Long id = (Long) httpServletRequest.getAttribute("userId");
+        UserUpdateRequest from = UserUpdateRequest.from(id, usersRequest.getName(), usersRequest.getPassword());
+        UserResponse usersResponse = usersService.updateUser(from);
         return ResponseEntity.status(HttpStatus.OK).body(usersResponse);
     }
 
