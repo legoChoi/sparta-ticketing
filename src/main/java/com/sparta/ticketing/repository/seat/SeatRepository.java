@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SeatRepository extends JpaRepository<Seat, Long> {
-    @Query("SELECT s from Seat s join fetch s.session, s.session.concert h where h.id = :sessionId")
+    @Query("SELECT s from Seat s join fetch s.session se join fetch se.concert h where h.id = :sessionId")
     public List<Seat> findAllBySessionId(long sessionId);
 
     @Query("select s from Seat s join fetch s.session h where s.id = :seatId and s.isAvailable = true")

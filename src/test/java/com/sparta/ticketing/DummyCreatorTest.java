@@ -8,6 +8,8 @@ import com.sparta.ticketing.repository.concert.ConcertRepository;
 import com.sparta.ticketing.repository.hall.HallRepository;
 import com.sparta.ticketing.repository.seat.SeatRepository;
 import com.sparta.ticketing.repository.session.SessionRepository;
+import com.sparta.ticketing.service.concert.ConcertConnectorInterface;
+import com.sparta.ticketing.service.concert.ConcertService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,16 +19,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 @SpringBootTest
+@Transactional
 public class DummyCreatorTest {
-
     @Autowired ConcertRepository concertRepository;
+    @Autowired ConcertService concertService;
     @Autowired HallRepository hallRepository;
-    @Autowired
-    SeatRepository seatsRepository;
+    @Autowired SeatRepository seatsRepository;
     @Autowired SessionRepository sessionRepository;
 
     @Test
-    @Transactional
     @Commit
     void createDummy() {
         Concert concert = new Concert("concert");
@@ -41,6 +42,11 @@ public class DummyCreatorTest {
         for (int i = 1; i <= 10; i++) {
             seatsRepository.save(new Seat(session, i));
         }
+    }
 
+    @Test
+    @Commit
+    void createBulkConcerts() {
+        concertService.bulkInsert(1000);
     }
 }
