@@ -12,6 +12,6 @@ public interface SeatRepository extends JpaRepository<Seat, Long> {
     @Query("SELECT s from Seat s join fetch s.session, s.session.concert h where h.id = :sessionId")
     public List<Seat> findAllBySessionId(long sessionId);
 
-    @Query("select s from Seat s join fetch s.session h where s.id = :seatId")
+    @Query("select s from Seat s join fetch s.session h where s.id = :seatId and s.isAvailable = true")
     public Optional<Seat> findFirstById(@Param("seatId") Long seatId);
 }

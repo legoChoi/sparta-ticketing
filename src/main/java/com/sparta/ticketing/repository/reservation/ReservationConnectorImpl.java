@@ -19,13 +19,6 @@ public class ReservationConnectorImpl implements ReservationConnectorInterface {
         return reservationRepository.save(reservation);
     }
 
-
-    @Override
-    @Transactional
-    public void updateStatusById(Long reservationId, ReservationStatus status) {
-        reservationRepository.updateStatusByReservationId(reservationId, status);
-    }
-
     @Override
     public List<Reservation> findActiveReservations() {
         return reservationRepository.findAllWithoutFailAndCancel();
@@ -35,10 +28,5 @@ public class ReservationConnectorImpl implements ReservationConnectorInterface {
     public Reservation findById(Long reservationId) {
         return reservationRepository.findById(reservationId)
             .orElseThrow(() -> new IllegalArgumentException("No reservation found"));
-    }
-
-    @Override
-    public boolean alreadyReserved(Long sessionId, Long seatId) {
-        return reservationRepository.checkAlreadyReserved(sessionId, seatId).isPresent();
     }
 }
