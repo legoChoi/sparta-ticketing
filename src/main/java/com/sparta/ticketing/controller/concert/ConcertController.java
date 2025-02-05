@@ -20,7 +20,6 @@ public class ConcertController {
     @PostMapping
     public ResponseEntity<String> addConcert(@RequestBody AddConcertRequest addConcertRequest){
         concertService.addConcert(addConcertRequest);
-
         return ResponseEntity.created(URI.create("")).build();
     }
 

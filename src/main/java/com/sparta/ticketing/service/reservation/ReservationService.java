@@ -4,19 +4,14 @@ import com.sparta.ticketing.annotation.RedisLock;
 import com.sparta.ticketing.dto.reservation.ReservationGetResponse;
 import com.sparta.ticketing.entity.Reservation;
 import com.sparta.ticketing.entity.ReservationStatus;
-import com.sparta.ticketing.entity.Seats;
+import com.sparta.ticketing.entity.Seat;
 import com.sparta.ticketing.entity.Session;
-import com.sparta.ticketing.lock.RedisLockService;
-import com.sparta.ticketing.service.seats.SeatsConnectorInterface;
+import com.sparta.ticketing.service.seat.SeatConnectorInterface;
 import com.sparta.ticketing.service.session.SessionConnectorInterface;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionSynchronization;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
-
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -24,7 +19,7 @@ import java.util.UUID;
 public class ReservationService{
     private final ReservationConnectorInterface reservationConnector;
     private final SessionConnectorInterface sessionConnector;
-    private final SeatsConnectorInterface seatsConnector;
+    private final SeatConnectorInterface seatsConnector;
 
     @Transactional
     @RedisLock(key = "'lock:session:' + #sessionId + ':seat:' + #seatId")
@@ -33,7 +28,7 @@ public class ReservationService{
         Reservation reservation = Reservation.from(status, name);
         checkAlreadyReserved(sessionId, seatId);
         Session session = sessionConnector.findById(sessionId);
-        Seats seat = seatsConnector.findById(seatId);
+        Seat seat = seatsConnector.findById(seatId);
 
         reservation.setSession(session);
         reservation.setSeats(seat);
@@ -60,7 +55,7 @@ public class ReservationService{
         swapSeatAvailability(reservation.getSession(), reservation.getSeats());
     }
 
-    private void swapSeatAvailability(Session session, Seats seats) {
+    private void swapSeatAvailability(Session session, Seat seats) {
         seats.swapAvailability();
         session.countPlusMinus(seats.isAvailable());
         sessionConnector.update(session);
