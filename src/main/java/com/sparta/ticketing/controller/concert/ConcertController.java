@@ -2,13 +2,17 @@ package com.sparta.ticketing.controller.concert;
 
 import com.sparta.ticketing.dto.concert.AddConcertRequest;
 import com.sparta.ticketing.dto.concert.ConcertResponse;
+import com.sparta.ticketing.dto.concert.GetBestConcertResponse;
 import com.sparta.ticketing.dto.concert.GetConcertResponse;
 import com.sparta.ticketing.service.concert.ConcertService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/concerts")
@@ -31,6 +35,13 @@ public class ConcertController {
     @GetMapping("/{concertId}")
     public ResponseEntity<GetConcertResponse> getConcert(@PathVariable Long concertId) {
         return ResponseEntity.ok(concertService.getConcert(concertId));
+    }
+
+    @GetMapping("/best")
+    public ResponseEntity<List<GetBestConcertResponse>> getBestConcerts(
+        @Valid @Max(10) @RequestParam int size
+    ) {
+        return ResponseEntity.ok(concertService.getBsetConcerts(size));
     }
 
     @GetMapping("/search")

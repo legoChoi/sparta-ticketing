@@ -3,6 +3,7 @@ package com.sparta.ticketing.service.concert;
 import com.sparta.ticketing.annotation.RedisLock;
 import com.sparta.ticketing.dto.concert.AddConcertRequest;
 import com.sparta.ticketing.dto.concert.ConcertResponse;
+import com.sparta.ticketing.dto.concert.GetBestConcertResponse;
 import com.sparta.ticketing.dto.concert.GetConcertResponse;
 import com.sparta.ticketing.entity.Concert;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,11 @@ public class ConcertService{
                 .map(Concert::getName)
                 .collect(Collectors.toList())
         );
+    }
+
+    @Transactional(readOnly = true)
+    public List<GetBestConcertResponse> getBsetConcerts(int size) {
+        return concertConnectorInterface.findBestConcerts(size);
     }
 
     @RedisLock(key = "'lock:concert:' + #concertId")

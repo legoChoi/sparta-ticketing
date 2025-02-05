@@ -1,5 +1,6 @@
 package com.sparta.ticketing.service.concert;
 
+import com.sparta.ticketing.dto.concert.GetBestConcertResponse;
 import com.sparta.ticketing.dto.concert.GetConcertResponse;
 import com.sparta.ticketing.entity.Concert;
 
@@ -17,4 +18,6 @@ public interface ConcertConnectorInterface {
     List<GetConcertResponse> searchConcert(String name, int page, int size);
 
     void updateConcert(Concert concert);
+
+    List<GetBestConcertResponse> findBestConcerts(int size);
 }
