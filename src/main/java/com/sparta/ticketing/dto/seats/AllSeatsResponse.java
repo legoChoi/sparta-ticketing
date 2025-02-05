@@ -1,7 +1,6 @@
 package com.sparta.ticketing.dto.seats;
 
-import com.sparta.ticketing.entity.Seats;
-import com.sparta.ticketing.entity.Session;
+import com.sparta.ticketing.entity.Seat;
 import lombok.Getter;
 
 @Getter
@@ -18,7 +17,7 @@ public class AllSeatsResponse {
         this.isAvailable = isAvailable;
     }
 
-    public static AllSeatsResponse from(Seats seats) {
+    public static AllSeatsResponse from(Seat seats) {
         return new AllSeatsResponse(
                 seats.getId(),
                 seats.getSession().getConcert().getName(),

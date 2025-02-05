@@ -1,18 +1,18 @@
 package com.sparta.ticketing.service.users;
 
 import com.sparta.ticketing.dto.users.UsersRequest;
-import com.sparta.ticketing.entity.Users;
+import com.sparta.ticketing.entity.User;
 import org.springframework.stereotype.Component;
 
 @Component
 public interface UsersConnectInterface {
-    Users addUsers(UsersRequest usersRequest);
+    User addUsers(UsersRequest usersRequest);
 
-    Users getUser(Long id);
+    User getUser(Long id);
 
-    Users updateUser(UsersRequest usersRequest);
+    User updateUser(UsersRequest usersRequest);
 
-    Users findById(Long id);
+    User findById(Long id);
 
     void deleteUser(Long id);
 }

@@ -33,7 +33,7 @@ public class ReservationConnectorImpl implements ReservationConnectorInterface {
 
     @Override
     public Reservation findById(Long reservationId) {
-        return reservationRepository.findByIdSuccess(reservationId)
+        return reservationRepository.findById(reservationId)
             .orElseThrow(() -> new IllegalArgumentException("No reservation found"));
     }
 

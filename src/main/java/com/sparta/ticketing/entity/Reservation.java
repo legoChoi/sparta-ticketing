@@ -28,7 +28,7 @@ public class Reservation {
     @Setter
     @JoinColumn(name = "seats_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Seats seats;
+    private Seat seats;
 
     private Reservation(ReservationStatus status, String userName) {
         this.status = status;

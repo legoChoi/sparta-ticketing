@@ -1,21 +1,21 @@
 package com.sparta.ticketing.dto.users;
 
-import com.sparta.ticketing.entity.Users;
-import com.sparta.ticketing.entity.UsersStatus;
+import com.sparta.ticketing.entity.User;
+import com.sparta.ticketing.entity.UserStatus;
 import lombok.Getter;
 
 @Getter
 public class UsersResponse {
 
     private final String name;
-    private final UsersStatus usersStatus;
+    private final UserStatus userStatus;
 
-    public UsersResponse(String name, UsersStatus usersStatus) {
+    public UsersResponse(String name, UserStatus userStatus) {
         this.name = name;
-        this.usersStatus = usersStatus;
+        this.userStatus = userStatus;
     }
 
-    public static UsersResponse from(Users users) {
-        return new UsersResponse(users.getName(), users.getUsersStatus());
+    public static UsersResponse from(User users) {
+        return new UsersResponse(users.getName(), users.getUserStatus());
     }
 }

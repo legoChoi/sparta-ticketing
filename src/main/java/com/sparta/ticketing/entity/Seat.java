@@ -3,12 +3,12 @@ package com.sparta.ticketing.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @Entity
 @NoArgsConstructor
-public class Seats {
+@Table(name = "seats")
+public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,13 +22,13 @@ public class Seats {
 
     private boolean isAvailable = true;
 
-    public Seats(Session session,int seatNumber) {
+    public Seat(Session session, int seatNumber) {
         this.session = session ;
         this.seatNumber = seatNumber;
     }
 
-    public static Seats from(Session session, int seatNumber) {
-        return new Seats(session, seatNumber);
+    public static Seat from(Session session, int seatNumber) {
+        return new Seat(session, seatNumber);
     }
 
     public void swapAvailability() {

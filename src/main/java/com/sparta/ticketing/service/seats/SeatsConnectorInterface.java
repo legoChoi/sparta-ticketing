@@ -1,19 +1,18 @@
 package com.sparta.ticketing.service.seats;
 
 import com.sparta.ticketing.dto.seats.SeatsDto;
-import com.sparta.ticketing.entity.Seats;
-import org.springframework.stereotype.Component;
+import com.sparta.ticketing.entity.Seat;
 
 import java.util.List;
 
 public interface SeatsConnectorInterface {
     void bulkInsertSeats(List<SeatsDto> seatNumber);
 
-    List<Seats> saveAll(List<Seats> seats);
+    List<Seat> saveAll(List<Seat> seats);
 
-    List<Seats> findAll(long hallId);
+    List<Seat> findAll(long hallId);
 
-    Seats findById(Long seatId);
+    Seat findById(Long seatId);
 
-    Seats update(Seats seats);
+    Seat update(Seat seats);
 }

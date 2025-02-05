@@ -1,7 +1,7 @@
 package com.sparta.ticketing.repository.seats;
 
 import com.sparta.ticketing.dto.seats.SeatsDto;
-import com.sparta.ticketing.entity.Seats;
+import com.sparta.ticketing.entity.Seat;
 import com.sparta.ticketing.service.seats.SeatsConnectorInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,24 +25,24 @@ public class SeatsConnectorInterfaceImpl implements SeatsConnectorInterface {
     }
 
     @Override
-    public List<Seats> saveAll(List<Seats> seats) {
-        List<Seats> seatsList = seatsRepository.saveAll(seats);
+    public List<Seat> saveAll(List<Seat> seats) {
+        List<Seat> seatsList = seatsRepository.saveAll(seats);
         return seatsList;
     }
 
     @Override
-    public List<Seats> findAll(long hallId) {
-        return seatsRepository.findAllBySessionId(hallId);
+    public List<Seat> findAll(long sessionId) {
+        return seatsRepository.findAllBySessionId(sessionId);
     }
 
     @Override
-    public Seats findById(Long seatId) {
+    public Seat findById(Long seatId) {
         return seatsRepository.findFirstById(seatId)
             .orElseThrow(() -> new IllegalArgumentException("no seat found"));
     }
 
     @Override
-    public Seats update(Seats seats) {
+    public Seat update(Seat seats) {
         return seatsRepository.save(seats);
     }
 }

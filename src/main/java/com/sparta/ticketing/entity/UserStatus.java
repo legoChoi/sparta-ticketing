@@ -1,6 +1,7 @@
 package com.sparta.ticketing.entity;
 
-public enum UsersStatus {
+public enum UserStatus {
+    NONE,
     BRONZE,
     SILVER,
     GOLD,

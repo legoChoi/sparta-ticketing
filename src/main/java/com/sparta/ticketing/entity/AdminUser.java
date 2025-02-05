@@ -6,33 +6,29 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Getter
 @NoArgsConstructor
-public class Users {
+public class AdminUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String adminCode;
 
     private String password;
 
-    private UsersStatus usersStatus;
+    private final UserRole userRole = UserRole.ROLE_ADMIN;
 
-    public Users(String name, String password) {
-        this.name = name;
+    private final UserStatus userStatus = UserStatus.NONE;
+
+    public AdminUser(String adminCode, String password) {
+        this.adminCode = adminCode;
         this.password = password;
-        this.usersStatus = UsersStatus.BRONZE;
     }
 
-    public static Users from() {
-        return new Users();
-    }
-
-    public void updateUserStatus(UsersStatus status) {
-        usersStatus = status;
+    public static AdminUser from() {
+        return new AdminUser();
     }
 }

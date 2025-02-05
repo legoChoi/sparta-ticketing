@@ -18,9 +18,9 @@ import java.util.List;
 public class SeatsController {
     private final SeatsService seatsService;
 
-    @GetMapping("/{hallId}")
-    public ResponseEntity<List<AllSeatsResponse>> getAllSeats(@PathVariable long hallId) {
-        List<AllSeatsResponse> all = seatsService.getAll(hallId);
+    @GetMapping("/{sessionId}")
+    public ResponseEntity<List<AllSeatsResponse>> getAllSeats(@PathVariable long sessionId) {
+        List<AllSeatsResponse> all = seatsService.getAll(sessionId);
         return ResponseEntity.status(HttpStatus.OK).body(all);
     }
 }
