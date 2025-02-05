@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/concerts")
@@ -24,7 +23,7 @@ public class ConcertController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ConcertResponse>> getAllConcerts(){
+    public ResponseEntity<ConcertResponse> getAllConcerts(){
         return ResponseEntity.ok(concertService.getAllConcerts());
     }
 }

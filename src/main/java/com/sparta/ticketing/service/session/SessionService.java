@@ -1,7 +1,7 @@
 package com.sparta.ticketing.service.session;
 
 import com.sparta.ticketing.dto.session.AddSessionRequest;
-import com.sparta.ticketing.dto.session.SessionResponse;
+import com.sparta.ticketing.dto.session.SessionsResponse;
 import com.sparta.ticketing.entity.Concert;
 import com.sparta.ticketing.entity.Hall;
 import com.sparta.ticketing.entity.Session;
@@ -29,10 +29,10 @@ public class SessionService{
 
     }
 
-    public List<SessionResponse> getAllSessions() {
+    public SessionsResponse getAllSessions() {
         List<Session> sessions = sessionConnectorInterface.getAllSessions();
-        return sessions.stream()
-                .map(session -> new SessionResponse(session))
-                .collect(Collectors.toList());
+        return new SessionsResponse(sessions.stream()
+                .map(SessionsResponse.SessionResponse::new)
+                .collect(Collectors.toList()));
     }
 }

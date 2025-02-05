@@ -20,10 +20,12 @@ public class ConcertService{
     }
 
     @Transactional(readOnly = true)
-    public List<ConcertResponse> getAllConcerts() {
+    public ConcertResponse getAllConcerts() {
         List<Concert> concerts = concertConnectorInterface.getAllConcerts();
-        return concerts.stream()
-                .map(concert -> new ConcertResponse(concert.getName()))
-                .collect(Collectors.toList());
+        return new ConcertResponse(
+                concerts.stream()
+                .map(concert -> concert.getName())
+                .collect(Collectors.toList())
+        );
     }
 }

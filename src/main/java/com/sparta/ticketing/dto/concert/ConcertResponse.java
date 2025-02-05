@@ -2,11 +2,13 @@ package com.sparta.ticketing.dto.concert;
 
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public class ConcertResponse {
-    private String name;
+    private List<String> names;
 
-    public ConcertResponse(String name) {
-        this.name = name;
+    public ConcertResponse(List<String> names) {
+        this.names = names;
     }
 }
