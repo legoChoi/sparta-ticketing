@@ -62,7 +62,7 @@ public class CommentConnectorInterfaceImpl implements CommentConnectorInterface 
     }
 
     private Comment findById(Long commentId) {
-        return commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("댓글 못찾음"))
+        return commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("댓글 못찾음"));
     }
 
     private static void extracted(Comment comment, User user) {
