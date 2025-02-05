@@ -15,6 +15,8 @@ public interface ConcertConnectorInterface {
 
     Concert findById(Long concertId);
 
+    List<GetConcertResponse> searchAllConcert(String name);
+
     List<GetConcertResponse> searchConcert(String name, int page, int size);
 
     void updateConcert(Concert concert);

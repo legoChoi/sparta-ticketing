@@ -19,6 +19,7 @@ import java.util.List;
 @Transactional
 public class ConcertConnectorInterfaceImpl implements ConcertConnectorInterface {
     private final ConcertRepository concertRepository;
+    private final QueryDslConcertRepository queryDslConcertRepository;
     private final JdbcTemplate jdbcTemplate;
 
     @Override
@@ -58,8 +59,14 @@ public class ConcertConnectorInterfaceImpl implements ConcertConnectorInterface 
     }
 
     @Override
+    public List<GetConcertResponse> searchAllConcert(String name) {
+        return queryDslConcertRepository.searchConcert(name, null);
+    }
+
+
+    @Override
     public List<GetConcertResponse> searchConcert(String name, int page, int size) {
-        return concertRepository.searchConcert(name, PageRequest.of(page, size));
+        return queryDslConcertRepository.searchConcert(name, PageRequest.of(page, size));
     }
 
     @Override
