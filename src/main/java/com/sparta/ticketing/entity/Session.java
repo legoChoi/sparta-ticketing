@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "sessions")
 public class Session {
 
     @Id
