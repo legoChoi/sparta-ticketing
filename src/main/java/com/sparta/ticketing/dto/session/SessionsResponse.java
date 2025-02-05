@@ -8,17 +8,17 @@ import java.util.List;
 
 @Getter
 public class SessionsResponse {
-    private List<SessionResponse> sessionsResponse;
+    private final List<SessionResponse> sessionsResponse;
 
     public SessionsResponse(List<SessionResponse> sessionsResponse){
         this.sessionsResponse = sessionsResponse;
     }
 
     public static class SessionResponse{
-        private String concertName;
-        private String location;
-        private LocalDateTime startDateTime;
-        private LocalDateTime endDateTime;
+        private final String concertName;
+        private final String location;
+        private final LocalDateTime startDateTime;
+        private final LocalDateTime endDateTime;
 
         public SessionResponse(Session session){
             this.concertName = session.getConcert().getName();

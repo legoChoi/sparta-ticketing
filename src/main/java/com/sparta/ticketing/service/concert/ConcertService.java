@@ -24,7 +24,7 @@ public class ConcertService{
         List<Concert> concerts = concertConnectorInterface.getAllConcerts();
         return new ConcertResponse(
                 concerts.stream()
-                .map(concert -> concert.getName())
+                .map(Concert::getName)
                 .collect(Collectors.toList())
         );
     }

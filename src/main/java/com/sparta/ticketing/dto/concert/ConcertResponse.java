@@ -6,7 +6,7 @@ import java.util.List;
 
 @Getter
 public class ConcertResponse {
-    private List<String> names;
+    private final List<String> names;
 
     public ConcertResponse(List<String> names) {
         this.names = names;
