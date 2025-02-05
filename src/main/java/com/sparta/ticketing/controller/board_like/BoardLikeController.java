@@ -45,9 +45,11 @@ public class BoardLikeController {
     }
 
     @DeleteMapping("/{boardLikeId}")
-    public ResponseEntity<Void> deleteBoardLike(HttpServletRequest httpServletRequest) {
+    public ResponseEntity<Void> deleteBoardLike(
+            @PathVariable Long boardLikeId
+            ,HttpServletRequest httpServletRequest) {
         Long id = (Long) httpServletRequest.getAttribute("userID");
-        boardLikeService.deleteBoardLike(id);
+        boardLikeService.deleteBoardLike(boardLikeId,id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
