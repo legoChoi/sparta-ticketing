@@ -1,7 +1,7 @@
 package com.sparta.ticketing.controller.comment;
 
 import com.sparta.ticketing.dto.comment.CommentListResponse;
-import com.sparta.ticketing.dto.board.CommentRequest;
+import com.sparta.ticketing.dto.comment.CommentRequest;
 import com.sparta.ticketing.dto.comment.CommentResponse;
 import com.sparta.ticketing.dto.comment.CommentUpdateRequest;
 import com.sparta.ticketing.service.comment.CommentService;

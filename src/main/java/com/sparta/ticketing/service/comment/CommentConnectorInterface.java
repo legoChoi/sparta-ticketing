@@ -1,6 +1,6 @@
 package com.sparta.ticketing.service.comment;
 
-import com.sparta.ticketing.dto.board.CommentRequest;
+import com.sparta.ticketing.dto.comment.CommentRequest;
 import com.sparta.ticketing.dto.comment.CommentUpdateRequest;
 import com.sparta.ticketing.entity.Comment;
 import org.springframework.stereotype.Component;

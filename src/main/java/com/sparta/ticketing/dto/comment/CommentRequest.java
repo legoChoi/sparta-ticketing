@@ -1,4 +1,4 @@
-package com.sparta.ticketing.dto.board;
+package com.sparta.ticketing.dto.comment;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
