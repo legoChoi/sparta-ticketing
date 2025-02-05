@@ -3,6 +3,7 @@ package com.sparta.ticketing.service.user;
 
 import com.sparta.ticketing.dto.user.UserRequest;
 import com.sparta.ticketing.dto.user.UserResponse;
+import com.sparta.ticketing.dto.user.UserUpdateRequest;
 import com.sparta.ticketing.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,7 @@ public class UserService {
     }
 
 
-    public UserResponse updateUser(UserRequest usersRequest) {
-        // 비번검증을 필터로 처리하면될듯
+    public UserResponse updateUser(UserUpdateRequest usersRequest) {
         User updateUser = userConnectInterface.updateUser(usersRequest);
         return UserResponse.from(updateUser);
     }

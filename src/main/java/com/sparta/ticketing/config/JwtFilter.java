@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -18,13 +19,17 @@ import java.util.List;
 
 
 @Slf4j
-@RequiredArgsConstructor
 @Component
 public class JwtFilter implements Filter {
 
     private final JwtUtil jwtUtil;
 
     private final List<String> allowedPrefix = List.of("/concerts", "/sessions", "/reservations", "/seats");
+
+    @Autowired
+    public JwtFilter(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

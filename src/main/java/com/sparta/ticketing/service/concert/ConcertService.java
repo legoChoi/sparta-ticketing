@@ -6,7 +6,6 @@ import com.sparta.ticketing.dto.concert.ConcertResponse;
 import com.sparta.ticketing.dto.concert.GetConcertResponse;
 import com.sparta.ticketing.entity.Concert;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ConcertService{
@@ -25,11 +23,14 @@ public class ConcertService{
         concertConnectorInterface.addConcert(addConcertRequest.getName());
     }
 
-    public List<ConcertResponse> getAllConcerts() {
+    @Transactional(readOnly = true)
+    public ConcertResponse getAllConcerts() {
         List<Concert> concerts = concertConnectorInterface.getAllConcerts();
-        return concerts.stream()
-            .map(concert -> new ConcertResponse(concert.getName()))
-            .collect(Collectors.toList());
+        return new ConcertResponse(
+                concerts.stream()
+                .map(Concert::getName)
+                .collect(Collectors.toList())
+        );
     }
 
     @RedisLock(key = "'lock:concert:' + #concertId")
