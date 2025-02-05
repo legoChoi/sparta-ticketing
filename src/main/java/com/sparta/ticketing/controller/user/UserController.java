@@ -1,5 +1,6 @@
 package com.sparta.ticketing.controller.user;
 
+import com.sparta.ticketing.dto.user.UserUpdateRequest;
 import com.sparta.ticketing.dto.user.UserRequest;
 import com.sparta.ticketing.dto.user.UserResponse;
 import com.sparta.ticketing.service.user.UserService;
@@ -31,7 +32,7 @@ public class UserController {
 
 
     @PatchMapping
-    public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest usersRequest) {
+    public ResponseEntity<UserResponse> updateUser(@RequestBody UserUpdateRequest usersRequest) {
         UserResponse usersResponse = usersService.updateUser(usersRequest);
         return ResponseEntity.status(HttpStatus.OK).body(usersResponse);
     }

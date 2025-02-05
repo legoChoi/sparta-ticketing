@@ -2,6 +2,7 @@ package com.sparta.ticketing.repository.user;
 
 import com.sparta.ticketing.config.PasswordEncoder;
 import com.sparta.ticketing.dto.user.UserRequest;
+import com.sparta.ticketing.dto.user.UserUpdateRequest;
 import com.sparta.ticketing.entity.User;
 import com.sparta.ticketing.service.user.UserConnectInterface;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class UserConnectorInterfaceImpl implements UserConnectInterface {
     }
 
     @Override
-    public User updateUser(UserRequest usersRequest) {
+    public User updateUser(UserUpdateRequest usersRequest) {
         return null;
     }
 
