@@ -1,11 +1,10 @@
 package com.sparta.ticketing.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,6 +17,9 @@ public class AnonymousUser {
 
     private String nickname;
     private String password;
+
+    @OneToMany(mappedBy = "anonymousUser", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<AnonymousReservation> anonymousReservations;
 
     public AnonymousUser(String nickname, String password) {
         this.nickname = nickname;
