@@ -30,7 +30,6 @@ public class UserService {
 
 
     public UserResponse updateUser(UserUpdateRequest usersRequest) {
-        // 비번검증을 필터로 처리하면될듯
         User updateUser = userConnectInterface.updateUser(usersRequest);
         return UserResponse.from(updateUser);
     }

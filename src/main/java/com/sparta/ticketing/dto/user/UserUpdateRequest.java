@@ -1,27 +1,23 @@
 package com.sparta.ticketing.dto.user;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 
+@Getter
 public class UserUpdateRequest {
 
-    private String originalPassword;
+    private Long id;
 
     private String name;
 
     private String password;
 
-    public UserUpdateRequest(String originalPassword, String name, String password) {
+    public UserUpdateRequest(Long id, String name, String password) {
+        this.id = id;
         this.name = name;
         this.password = password;
-        this.originalPassword = originalPassword;
     }
 
-    @JsonCreator
-    public static UserUpdateRequest from(
-            @JsonProperty("originalPassword") String originalPassword,
-            @JsonProperty("name") String name,
-            @JsonProperty("password") String password) {
-        return new UserUpdateRequest(originalPassword,name, password);
+    public static UserUpdateRequest from(Long id, String name,String password) {
+        return new UserUpdateRequest(id,name, password);
     }
 }
