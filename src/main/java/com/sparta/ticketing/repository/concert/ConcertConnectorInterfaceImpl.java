@@ -1,5 +1,6 @@
 package com.sparta.ticketing.repository.concert;
 
+import com.sparta.ticketing.dto.concert.GetBestConcertResponse;
 import com.sparta.ticketing.dto.concert.GetConcertResponse;
 import com.sparta.ticketing.entity.Concert;
 import com.sparta.ticketing.service.concert.ConcertConnectorInterface;
@@ -42,6 +43,12 @@ public class ConcertConnectorInterfaceImpl implements ConcertConnectorInterface 
     @Transactional(readOnly = true)
     public List<Concert> getAllConcerts() {
         return concertRepository.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<GetBestConcertResponse> findBestConcerts(int size) {
+        return concertRepository.findConcertOrderBySearchCount(PageRequest.of(0, size));
     }
 
     @Override
