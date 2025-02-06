@@ -3,6 +3,7 @@ package com.sparta.ticketing.repository.session;
 import com.sparta.ticketing.entity.Concert;
 import com.sparta.ticketing.entity.Hall;
 import com.sparta.ticketing.entity.Session;
+import com.sparta.ticketing.exception.ExceptionStatus;
 import com.sparta.ticketing.service.session.SessionConnectorInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -30,7 +31,7 @@ public class SessionConnectorInterfaceImpl implements SessionConnectorInterface 
     @Override
     public Session findById(Long sessionId) {
         return sessionRepository.findFirstById(sessionId)
-            .orElseThrow(() -> new IllegalArgumentException("no session found"));
+            .orElseThrow(() -> new IllegalArgumentException(ExceptionStatus.NOTFOUND_SESSION.getMessage()));
     }
 
     @Override

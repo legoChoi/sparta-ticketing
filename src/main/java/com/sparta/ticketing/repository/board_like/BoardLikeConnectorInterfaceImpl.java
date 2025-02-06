@@ -4,11 +4,14 @@ import com.sparta.ticketing.dto.boardLike.BoardLikeRequest;
 import com.sparta.ticketing.entity.Board;
 import com.sparta.ticketing.entity.BoardLike;
 import com.sparta.ticketing.entity.User;
+import com.sparta.ticketing.exception.ExceptionStatus;
+import com.sparta.ticketing.exception.InsufficientPermissionException;
 import com.sparta.ticketing.service.board.BoardConnectorInterface;
 import com.sparta.ticketing.service.board_like.BoardLikeConnectorInterface;
 import com.sparta.ticketing.service.user.UserConnectInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +23,7 @@ public class BoardLikeConnectorInterfaceImpl implements BoardLikeConnectorInterf
     private final BoardConnectorInterface boardConnectorInterface;
 
     @Override
+    @Transactional
     public BoardLike addBoardLike(BoardLikeRequest boardLikeRequest, Long id) {
         User user = userConnectInterface.findById(id);
         Board board = boardConnectorInterface.findById(boardLikeRequest.getBoardId());
@@ -38,15 +42,17 @@ public class BoardLikeConnectorInterfaceImpl implements BoardLikeConnectorInterf
     }
 
     @Override
+    @Transactional
     public void deleteBoardLike(Long boardLikeId, Long userId) {
         BoardLike boardLike = findById(boardLikeId);
         if (!boardLike.getUser().getId().equals(userId)) {
-            throw new RuntimeException("해당좋아요에 접근권한없음");
+            throw new InsufficientPermissionException(ExceptionStatus.UNAUTHORIZED_ACCESS.getMessage());
         }
         boardLikeRepository.delete(boardLike);
     }
 
     private BoardLike findById(Long boardLikeId) {
-        return boardLikeRepository.findById(boardLikeId).orElseThrow(()->new IllegalArgumentException("해당 게시글에 좋아요없음"));
+        return boardLikeRepository.findById(boardLikeId)
+                .orElseThrow(()->new IllegalArgumentException(ExceptionStatus.NOTFOUND_LIKE.getMessage()));
     }
 }

@@ -4,6 +4,7 @@ import com.sparta.ticketing.config.PasswordEncoder;
 import com.sparta.ticketing.dto.user.UserRequest;
 import com.sparta.ticketing.dto.user.UserUpdateRequest;
 import com.sparta.ticketing.entity.User;
+import com.sparta.ticketing.exception.ExceptionStatus;
 import com.sparta.ticketing.service.user.UserConnectInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -45,18 +46,21 @@ public class UserConnectorInterfaceImpl implements UserConnectInterface {
     }
 
     @Override
-    public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("유저 정보를 찾지 못함"));
-    }
-
-    @Override
+    @Transactional
     public void deleteUser(Long id) {
         User user = findById(id);
         user.deleteUser();
     }
 
     @Override
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(ExceptionStatus.NOTFOUND_USER.getMessage()));
+    }
+
+    @Override
     public User findByName(String name) {
-        return userRepository.findByName(name).orElseThrow(()-> new IllegalArgumentException("노유저"));
+        return userRepository.findByName(name)
+                .orElseThrow(()-> new IllegalArgumentException(ExceptionStatus.NOTFOUND_USER.getMessage()));
     }
 }

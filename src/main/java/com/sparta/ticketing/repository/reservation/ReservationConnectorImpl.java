@@ -2,6 +2,7 @@ package com.sparta.ticketing.repository.reservation;
 
 import com.sparta.ticketing.entity.Reservation;
 import com.sparta.ticketing.entity.ReservationStatus;
+import com.sparta.ticketing.exception.ExceptionStatus;
 import com.sparta.ticketing.service.reservation.ReservationConnectorInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ public class ReservationConnectorImpl implements ReservationConnectorInterface {
     private final ReservationRepository reservationRepository;
 
     @Override
+    @Transactional
     public Reservation addReservation(Reservation reservation) {
         return reservationRepository.save(reservation);
     }
@@ -27,6 +29,6 @@ public class ReservationConnectorImpl implements ReservationConnectorInterface {
     @Override
     public Reservation findById(Long reservationId) {
         return reservationRepository.findById(reservationId)
-            .orElseThrow(() -> new IllegalArgumentException("No reservation found"));
+            .orElseThrow(() -> new IllegalArgumentException(ExceptionStatus.NOTFOUND_RESERVATION.getMessage()));
     }
 }

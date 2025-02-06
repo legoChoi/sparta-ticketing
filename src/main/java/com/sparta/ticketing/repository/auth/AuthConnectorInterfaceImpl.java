@@ -7,6 +7,7 @@ import com.sparta.ticketing.dto.auth.LoginAdminRequest;
 import com.sparta.ticketing.dto.auth.LoginUserRequest;
 import com.sparta.ticketing.entity.AdminUser;
 import com.sparta.ticketing.entity.User;
+import com.sparta.ticketing.exception.ExceptionStatus;
 import com.sparta.ticketing.repository.user.UserConnectorInterfaceImpl;
 import com.sparta.ticketing.repository.user.UserRepository;
 import com.sparta.ticketing.service.admin.AdminConnectorInterface;
@@ -30,7 +31,7 @@ public class AuthConnectorInterfaceImpl implements AuthConnectorInterface {
         User user = userConnectInterface.findByName(loginUserRequest.getName());
 
         if (!passwordEncoder.matches(loginUserRequest.getPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("잘못된 비번");
+            throw new IllegalArgumentException(ExceptionStatus.WRONG_PASSWORD.getMessage());
         }
 
         String token = jwtUtil.createToken(user.getId(), user.getUserRole());
@@ -41,7 +42,7 @@ public class AuthConnectorInterfaceImpl implements AuthConnectorInterface {
     public JwtResponse loginAdmin(LoginAdminRequest loginAdminRequest) {
         AdminUser adminUser = adminConnectorInterface.findByAdminCode(loginAdminRequest.getAdminCode());
         if (!passwordEncoder.matches(loginAdminRequest.getPassword(), adminUser.getPassword())) {
-            throw new IllegalArgumentException("잘못된 비번");
+            throw new IllegalArgumentException(ExceptionStatus.WRONG_PASSWORD.getMessage());
         }
         String token = jwtUtil.createToken(adminUser.getId(), adminUser.getUserRole());
         return JwtResponse.from(token);

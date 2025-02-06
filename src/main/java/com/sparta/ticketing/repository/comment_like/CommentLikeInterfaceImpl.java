@@ -4,6 +4,8 @@ import com.sparta.ticketing.dto.comment_like.CommentLikeRequest;
 import com.sparta.ticketing.entity.Comment;
 import com.sparta.ticketing.entity.CommentLike;
 import com.sparta.ticketing.entity.User;
+import com.sparta.ticketing.exception.ExceptionStatus;
+import com.sparta.ticketing.exception.InsufficientPermissionException;
 import com.sparta.ticketing.service.comment.CommentConnectorInterface;
 import com.sparta.ticketing.service.comment_like.CommentLikeConnectorInterface;
 import com.sparta.ticketing.service.user.UserConnectInterface;
@@ -45,13 +47,13 @@ public class CommentLikeInterfaceImpl implements CommentLikeConnectorInterface {
     public void deleteCommentLike(Long commentLikeId, Long id) {
         CommentLike commentLike = findById(commentLikeId);
         if (!commentLike.getUser().getId().equals(id)) {
-            throw new RuntimeException("댓글좋아요권한없음");
+            throw new InsufficientPermissionException(ExceptionStatus.UNAUTHORIZED_ACCESS.getMessage());
         }
         commentLikeRepository.delete(commentLike);
     }
 
     public CommentLike findById(Long commentLikeId) {
         return commentLikeRepository.findById(commentLikeId).
-                orElseThrow(()->new IllegalArgumentException("댓글좋아요못찾음"));
+                orElseThrow(()->new IllegalArgumentException(ExceptionStatus.NOTFOUND_LIKE.getMessage()));
     }
 }

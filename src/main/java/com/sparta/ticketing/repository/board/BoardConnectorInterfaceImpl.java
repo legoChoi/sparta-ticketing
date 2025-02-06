@@ -4,6 +4,8 @@ import com.sparta.ticketing.dto.board.BoardRequest;
 import com.sparta.ticketing.dto.board.BoardUpdateRequest;
 import com.sparta.ticketing.entity.Board;
 import com.sparta.ticketing.entity.User;
+import com.sparta.ticketing.exception.ExceptionStatus;
+import com.sparta.ticketing.exception.InsufficientPermissionException;
 import com.sparta.ticketing.service.board.BoardConnectorInterface;
 import com.sparta.ticketing.service.user.UserConnectInterface;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +31,8 @@ public class BoardConnectorInterfaceImpl implements BoardConnectorInterface {
 
     @Override
     public Board findById(Long boardId) {
-        return boardRepository.findById(boardId).orElseThrow(()->new IllegalArgumentException("그런 게시판없음"));
+        return boardRepository.findById(boardId)
+                .orElseThrow(()->new IllegalArgumentException(ExceptionStatus.NOTFOUND_BOARD.getMessage()));
     }
 
     @Override
@@ -49,6 +52,7 @@ public class BoardConnectorInterfaceImpl implements BoardConnectorInterface {
     }
 
     @Override
+    @Transactional
     public void deleteBoard(Long boardId, Long userId) {
         Board board = getBoard(boardId, boardId);
         boardRepository.delete(board);
@@ -63,8 +67,10 @@ public class BoardConnectorInterfaceImpl implements BoardConnectorInterface {
         User user = userConnectInterface.findById(id);
         Board board = findById(boardId);
         if (!board.getId().equals(user.getId())) {
-            throw new RuntimeException("게시판에 접근 권한없음");
+            throw new InsufficientPermissionException
+                    (ExceptionStatus.UNAUTHORIZED_ACCESS.getMessage());
         }
+
         return board;
     }
 }

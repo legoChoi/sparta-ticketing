@@ -1,4 +1,4 @@
-package com.sparta.ticketing.config;
+package com.sparta.ticketing.exception;
 
 public class ServerException extends RuntimeException {
 

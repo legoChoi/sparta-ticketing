@@ -5,6 +5,8 @@ import com.sparta.ticketing.dto.comment.CommentUpdateRequest;
 import com.sparta.ticketing.entity.Board;
 import com.sparta.ticketing.entity.Comment;
 import com.sparta.ticketing.entity.User;
+import com.sparta.ticketing.exception.ExceptionStatus;
+import com.sparta.ticketing.exception.InsufficientPermissionException;
 import com.sparta.ticketing.service.board.BoardConnectorInterface;
 import com.sparta.ticketing.service.comment.CommentConnectorInterface;
 import com.sparta.ticketing.service.user.UserConnectInterface;
@@ -42,6 +44,7 @@ public class CommentConnectorInterfaceImpl implements CommentConnectorInterface 
     }
 
     @Override
+    @Transactional
     public Comment updateComment(CommentUpdateRequest commentUpdateRequest, Long id) {
         User user = userConnectInterface.findById(id);
         Comment comment = findById(commentUpdateRequest.getCommentId());
@@ -54,6 +57,7 @@ public class CommentConnectorInterfaceImpl implements CommentConnectorInterface 
     }
 
     @Override
+    @Transactional
     public void deleteComment(Long commentId, Long id) {
         User user = userConnectInterface.findById(id);
         Comment comment = findById(commentId);
@@ -62,12 +66,13 @@ public class CommentConnectorInterfaceImpl implements CommentConnectorInterface 
     }
 
     public Comment findById(Long commentId) {
-        return commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("댓글 못찾음"));
+        return commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException(ExceptionStatus.NOTFOUND_COMMENT.getMessage()));
     }
 
     private void extracted(Comment comment, User user) {
         if (!comment.getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("댓글에 접근권한없음");
+            throw new InsufficientPermissionException(ExceptionStatus.UNAUTHORIZED_ACCESS.getMessage());
         }
     }
 }

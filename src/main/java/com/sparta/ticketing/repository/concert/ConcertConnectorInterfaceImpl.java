@@ -3,6 +3,7 @@ package com.sparta.ticketing.repository.concert;
 import com.sparta.ticketing.dto.concert.GetBestConcertResponse;
 import com.sparta.ticketing.dto.concert.GetConcertResponse;
 import com.sparta.ticketing.entity.Concert;
+import com.sparta.ticketing.exception.ExceptionStatus;
 import com.sparta.ticketing.service.concert.ConcertConnectorInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -53,7 +54,8 @@ public class ConcertConnectorInterfaceImpl implements ConcertConnectorInterface 
     @Override
     @Transactional(readOnly = true)
     public Concert findById(Long concertId) {
-        return concertRepository.findById(concertId).orElseThrow(() -> new IllegalArgumentException("not found concert"));
+        return concertRepository.findById(concertId)
+                .orElseThrow(() -> new IllegalArgumentException(ExceptionStatus.NOTFOUND_CONCERT.getMessage()));
     }
 
     @Override

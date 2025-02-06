@@ -4,10 +4,12 @@ import com.sparta.ticketing.config.PasswordEncoder;
 import com.sparta.ticketing.dto.admin.AdminRequest;
 import com.sparta.ticketing.dto.admin.UpdateAdminRequest;
 import com.sparta.ticketing.entity.AdminUser;
+import com.sparta.ticketing.exception.ExceptionStatus;
 import com.sparta.ticketing.service.admin.AdminConnectorInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.Exceptions;
 
 @Component
 @RequiredArgsConstructor
@@ -38,16 +40,20 @@ public class AdminConnectorInterfaceImpl implements AdminConnectorInterface {
     }
 
     @Override
+    @Transactional
     public void deleteAdmin(Long id) {
+
         adminRepository.deleteById(id);
     }
 
     @Override
     public AdminUser findByAdminCode(String adminCode) {
-        return adminRepository.findByAdminCode(adminCode).orElseThrow(()->new IllegalArgumentException("유효하지않은 관리자코드"));
+        return adminRepository.findByAdminCode(adminCode)
+                .orElseThrow(()->new IllegalArgumentException(ExceptionStatus.NOTFOUND_ADMIN.getMessage()));
     }
 
     private AdminUser findById(long adminId) {
-        return adminRepository.findById(adminId).orElseThrow(() -> new IllegalArgumentException("관리자 계정을 찾을수 없음"));
+        return adminRepository.findById(adminId)
+                .orElseThrow(() -> new IllegalArgumentException(ExceptionStatus.NOTFOUND_ADMIN.getMessage()));
     }
 }

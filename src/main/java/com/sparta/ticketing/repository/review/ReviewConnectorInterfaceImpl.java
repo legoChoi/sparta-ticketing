@@ -5,6 +5,8 @@ import com.sparta.ticketing.dto.review.ReviewUpdateRequest;
 import com.sparta.ticketing.entity.Review;
 import com.sparta.ticketing.entity.Session;
 import com.sparta.ticketing.entity.User;
+import com.sparta.ticketing.exception.ExceptionStatus;
+import com.sparta.ticketing.exception.InsufficientPermissionException;
 import com.sparta.ticketing.service.review.ReviewConnectorInterface;
 import com.sparta.ticketing.service.session.SessionConnectorInterface;
 import com.sparta.ticketing.service.user.UserConnectInterface;
@@ -52,7 +54,7 @@ public class ReviewConnectorInterfaceImpl implements ReviewConnectorInterface {
     public Review updateReview(ReviewUpdateRequest reviewUpdateRequest, Long id) {
         Review review = findById(reviewUpdateRequest.getReviewId());
         if (!review.getUser().getId().equals(id)) {
-            throw new RuntimeException("해당 리뷰에 권한없음");
+            throw new InsufficientPermissionException(ExceptionStatus.UNAUTHORIZED_ACCESS.getMessage());
         }
         if (!review.getContents().equals(reviewUpdateRequest.getContent())) {
             review.updateContents(reviewUpdateRequest.getContent());
@@ -66,16 +68,17 @@ public class ReviewConnectorInterfaceImpl implements ReviewConnectorInterface {
     }
 
     @Override
+    @Transactional
     public void deleteReview(Long reviewId, Long id) {
         Review review = findById(reviewId);
         if (!review.getUser().getId().equals(id)) {
-            throw new RuntimeException("리뷰에 권한없음");
+            throw new InsufficientPermissionException(ExceptionStatus.UNAUTHORIZED_ACCESS.getMessage());
         }
         reviewRepository.delete(review);
     }
 
     private Review findById(Long reviewId) {
         return reviewRepository.findById(reviewId)
-                .orElseThrow(()->new IllegalArgumentException("리뷰를 찾을수 없음"));
+                .orElseThrow(() -> new IllegalArgumentException(ExceptionStatus.NOTFOUND_REVIEW.getMessage()));
     }
 }

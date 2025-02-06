@@ -1,9 +1,11 @@
 package com.sparta.ticketing.repository.seat;
 
 import com.sparta.ticketing.entity.Seat;
+import com.sparta.ticketing.exception.ExceptionStatus;
 import com.sparta.ticketing.service.seat.SeatConnectorInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,9 +15,9 @@ public class SeatConnectorInterfaceImpl implements SeatConnectorInterface {
     private final SeatRepository seatsRepository;
 
     @Override
+    @Transactional
     public List<Seat> saveAll(List<Seat> seats) {
-        List<Seat> seatsList = seatsRepository.saveAll(seats);
-        return seatsList;
+        return seatsRepository.saveAll(seats);
     }
 
     @Override
@@ -26,6 +28,6 @@ public class SeatConnectorInterfaceImpl implements SeatConnectorInterface {
     @Override
     public Seat findById(Long seatId) {
         return seatsRepository.findFirstById(seatId)
-            .orElseThrow(() -> new IllegalArgumentException("no seat found"));
+            .orElseThrow(() -> new IllegalArgumentException(ExceptionStatus.NOTFOUND_SEAT.getMessage()));
     }
 }
