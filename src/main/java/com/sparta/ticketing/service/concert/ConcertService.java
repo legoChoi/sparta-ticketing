@@ -1,6 +1,7 @@
 package com.sparta.ticketing.service.concert;
 
 import com.sparta.ticketing.aop.annotation.CacheEvictPattern;
+import com.sparta.ticketing.aop.annotation.RedisCacheEvict;
 import com.sparta.ticketing.aop.annotation.RedisLock;
 import com.sparta.ticketing.dto.concert.AddConcertRequest;
 import com.sparta.ticketing.dto.concert.ConcertResponse;
@@ -22,7 +23,8 @@ import java.util.stream.Collectors;
 public class ConcertService{
     private final ConcertConnectorInterface concertConnectorInterface;
 
-    @CacheEvictPattern(pattern = "#request.getName()", value = "searchConcert")
+    // @CacheEvictPattern(pattern = "#request.getName()", value = "searchConcert")
+    @RedisCacheEvict(key = "#request.getName()")
     @Transactional
     public void addConcert(AddConcertRequest request) {
         concertConnectorInterface.addConcert(request.getName());

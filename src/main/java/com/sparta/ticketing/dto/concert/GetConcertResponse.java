@@ -1,11 +1,14 @@
 package com.sparta.ticketing.dto.concert;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class GetConcertResponse {
-    private final Long id;
-    private final String name;
+    private Long id;
+    private String name;
 }
