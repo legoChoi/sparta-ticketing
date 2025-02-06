@@ -1,13 +1,13 @@
 package com.sparta.ticketing.service.concert;
 
-import com.sparta.ticketing.annotation.RedisLock;
+import com.sparta.ticketing.aop.annotation.CacheEvictPattern;
+import com.sparta.ticketing.aop.annotation.RedisLock;
 import com.sparta.ticketing.dto.concert.AddConcertRequest;
 import com.sparta.ticketing.dto.concert.ConcertResponse;
 import com.sparta.ticketing.dto.concert.GetBestConcertResponse;
 import com.sparta.ticketing.dto.concert.GetConcertResponse;
 import com.sparta.ticketing.entity.Concert;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class ConcertService{
     private final ConcertConnectorInterface concertConnectorInterface;
 
-    @CacheEvict(value = "concertCache", allEntries = true)
+    @CacheEvictPattern(pattern = "#request.getName()", value = "searchConcert")
     @Transactional
     public void addConcert(AddConcertRequest request) {
         concertConnectorInterface.addConcert(request.getName());

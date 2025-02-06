@@ -1,6 +1,7 @@
-package com.sparta.ticketing.aspect;
+package com.sparta.ticketing.aop;
 
-import com.sparta.ticketing.annotation.RedisLock;
+import com.sparta.ticketing.aop.annotation.RedisLock;
+import com.sparta.ticketing.config.SpelUtil;
 import com.sparta.ticketing.lock.RedisLockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,12 +9,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.context.expression.MethodBasedEvaluationContext;
-import org.springframework.core.DefaultParameterNameDiscoverer;
-import org.springframework.core.ParameterNameDiscoverer;
-import org.springframework.expression.Expression;
-import org.springframework.expression.ExpressionParser;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
@@ -28,10 +23,9 @@ import java.util.UUID;
 public class RedisLockAspect {
 
     private final RedisLockService redisLockService;
-    private final ParameterNameDiscoverer nameDiscoverer = new DefaultParameterNameDiscoverer();
-    private final ExpressionParser parser = new SpelExpressionParser();
+    private final SpelUtil spelUtil;
 
-    @Around("@annotation(com.sparta.ticketing.annotation.RedisLock)")
+    @Around("@annotation(com.sparta.ticketing.aop.annotation.RedisLock)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         // 서비스 로직 수행 전 lock 획득
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
@@ -40,7 +34,7 @@ public class RedisLockAspect {
         int maxRetry = redisLockAnnotation.maxRetry();
         long retryDelay = redisLockAnnotation.retryDelay();
         long timeout = redisLockAnnotation.timeout();
-        String lockKey = evaluateSpel(joinPoint, redisLockAnnotation.key());
+        String lockKey = spelUtil.evaluate(joinPoint, redisLockAnnotation.key());
         String lockValue = UUID.randomUUID().toString();
 
         int retryCount = 0;
@@ -74,15 +68,5 @@ public class RedisLockAspect {
             });
         }
         return joinPoint.proceed();
-    }
-
-    private String evaluateSpel(ProceedingJoinPoint joinPoint, String keyExpression) {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Object[] args = joinPoint.getArgs();
-        MethodBasedEvaluationContext context = new MethodBasedEvaluationContext(
-            null, signature.getMethod(), args, nameDiscoverer);
-
-        Expression expression = parser.parseExpression(keyExpression);
-        return expression.getValue(context, String.class);
     }
 }

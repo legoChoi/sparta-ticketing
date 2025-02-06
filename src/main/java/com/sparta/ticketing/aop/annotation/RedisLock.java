@@ -1,4 +1,4 @@
-package com.sparta.ticketing.annotation;
+package com.sparta.ticketing.aop.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

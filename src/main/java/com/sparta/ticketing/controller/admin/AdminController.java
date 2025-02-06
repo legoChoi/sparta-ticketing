@@ -1,6 +1,6 @@
 package com.sparta.ticketing.controller.admin;
 
-import com.sparta.ticketing.aop.OnlyAdmin;
+import com.sparta.ticketing.aop.annotation.OnlyAdmin;
 import com.sparta.ticketing.dto.admin.AdminRequest;
 import com.sparta.ticketing.dto.admin.AdminResponse;
 import com.sparta.ticketing.dto.admin.UpdateAdminRequest;

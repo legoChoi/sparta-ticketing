@@ -17,7 +17,7 @@ public class AdminCheckAspect {
 
     private final HttpServletRequest httpServletRequest;
 
-    @Before("@annotation(com.sparta.ticketing.aop.OnlyAdmin)")
+    @Before("@annotation(com.sparta.ticketing.aop.annotation.OnlyAdmin)")
     public void checkAdminRole() {
         String userRole = (String) httpServletRequest.getAttribute("userRole");
         if (!"ROLE_ADMIN".equals(userRole)) {

@@ -1,6 +1,6 @@
 package com.sparta.ticketing.service.reservation;
 
-import com.sparta.ticketing.annotation.RedisLock;
+import com.sparta.ticketing.aop.annotation.RedisLock;
 import com.sparta.ticketing.dto.reservation.ReservationGetResponse;
 import com.sparta.ticketing.entity.Reservation;
 import com.sparta.ticketing.entity.ReservationStatus;
