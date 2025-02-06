@@ -30,7 +30,12 @@ public class ConcertService{
 
     public List<GetConcertResponse> cachingSearchConcert(String name, int page, int size) {
         List<GetConcertResponse> concertResponses = searchAllConcert(name);
-        int start = Math.min(page * size, concertResponses.size());
+        int listSize = concertResponses.size();
+        int start = page * size;
+
+        if(start > listSize) return new ArrayList<>();
+
+        if(start + size > listSize) { size = listSize - start; }
         return concertResponses.subList(start, start + size);
     }
 
@@ -68,8 +73,18 @@ public class ConcertService{
     public void bulkInsert(int repeats) {
         List<Concert> concerts = new ArrayList<>();
         for(int i = 1; i <= repeats; i++) {
-            concerts.add(new Concert("concert" + i));
+            concerts.add(new Concert(randomString(20)));
         }
         concertConnectorInterface.bulkInsert(concerts);
+    }
+
+    private String randomString(int length) {
+        String alphabetAndDigits = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+        StringBuilder sb = new StringBuilder();
+        while (length-- > 0) {
+            sb.append(alphabetAndDigits.charAt((int)Math.floor(Math.random() * alphabetAndDigits.length())));
+        }
+        return sb.toString();
     }
 }
