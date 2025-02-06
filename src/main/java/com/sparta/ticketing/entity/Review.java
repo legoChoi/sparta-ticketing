@@ -33,7 +33,15 @@ public class Review {
         this.star = star;
     }
 
-    public static Review from() {
-        return new Review();
+    public static Review from(User user, Session session, String content, int star) {
+        return new Review(session, user, content, star);
+    }
+
+    public void updateContents(String content) {
+        this.contents = content;
+    }
+
+    public void updateStar(int star) {
+        this.star = star;
     }
 }

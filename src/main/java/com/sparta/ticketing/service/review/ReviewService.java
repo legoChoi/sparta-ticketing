@@ -21,18 +21,21 @@ public class ReviewService {
     }
 
     public List<ReviewResponse> getMyReview(Long id) {
-        return null;
+        List<Review> reviews = reviewConnectorInterface.findAllByUserId(id);
+        return reviews.stream().map(ReviewResponse::from).toList();
     }
 
     public List<ReviewResponse> getMySession(long sessionId) {
-        return null;
+        List<Review> reviews = reviewConnectorInterface.findAllBySessionId(sessionId);
+        return reviews.stream().map(ReviewResponse::from).toList();
     }
 
     public ReviewResponse updateReview(ReviewUpdateRequest reviewUpdateRequest, Long id) {
-        return null;
+        Review review = reviewConnectorInterface.updateReview(reviewUpdateRequest, id);
+        return ReviewResponse.from(review);
     }
 
     public void deleteReview(Long reviewId, Long id) {
-
+        reviewConnectorInterface.deleteReview(reviewId, id);
     }
 }
