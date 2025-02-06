@@ -6,6 +6,7 @@ import com.sparta.ticketing.dto.comment.CommentResponse;
 import com.sparta.ticketing.dto.comment.CommentUpdateRequest;
 import com.sparta.ticketing.service.comment.CommentService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity<CommentResponse> addComment(
-            @RequestBody CommentRequest commentRequest,
+            @Valid @RequestBody CommentRequest commentRequest,
             HttpServletRequest httpServletRequest) {
         Long id = (Long) httpServletRequest.getAttribute("userId");
         CommentResponse commentResponse = commentService.addComment(commentRequest, id);
@@ -47,7 +48,7 @@ public class CommentController {
 
     @PatchMapping
     public ResponseEntity<CommentResponse> updateComment
-            (@RequestBody CommentUpdateRequest commentUpdateRequest,
+            (@Valid @RequestBody CommentUpdateRequest commentUpdateRequest,
              HttpServletRequest httpServletRequest
             ) {
         Long id = (Long) httpServletRequest.getAttribute("userId");

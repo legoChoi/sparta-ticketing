@@ -5,6 +5,7 @@ import com.sparta.ticketing.dto.boardLike.BoardLikeRequest;
 import com.sparta.ticketing.dto.boardLike.BoardLikeResponse;
 import com.sparta.ticketing.service.board_like.BoardLikeService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class BoardLikeController {
 
     @PostMapping
     public ResponseEntity<BoardLikeResponse> addBoardLike(
-            @RequestBody BoardLikeRequest boardLikeRequest,
+            @Valid @RequestBody BoardLikeRequest boardLikeRequest,
             HttpServletRequest httpServletRequest
     ) {
         Long id = (Long) httpServletRequest.getAttribute("userId");

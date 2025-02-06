@@ -5,6 +5,7 @@ import com.sparta.ticketing.dto.session.SessionsResponse;
 import com.sparta.ticketing.entity.Session;
 import com.sparta.ticketing.service.seat.SeatService;
 import com.sparta.ticketing.service.session.SessionService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class SessionController {
     private final SeatService seatsService;
 
     @PostMapping
-    public ResponseEntity<String> addSession(@RequestBody AddSessionRequest addSessionRequest){
+    public ResponseEntity<String> addSession(@Valid @RequestBody AddSessionRequest addSessionRequest){
         Session session = sessionService.addSession(addSessionRequest);
 
         seatsService.addSeats(session.getId(), session.getValidSeatCount());

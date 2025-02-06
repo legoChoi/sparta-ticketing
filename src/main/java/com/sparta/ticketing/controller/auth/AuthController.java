@@ -3,6 +3,7 @@ package com.sparta.ticketing.controller.auth;
 import com.sparta.ticketing.dto.auth.JwtResponse;
 import com.sparta.ticketing.dto.auth.LoginUserRequest;
 import com.sparta.ticketing.service.auth.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping
-    public ResponseEntity<JwtResponse> loginUser(@RequestBody LoginUserRequest loginUserRequest) {
+    public ResponseEntity<JwtResponse> loginUser(@Valid @RequestBody LoginUserRequest loginUserRequest) {
         JwtResponse jwtResponse = authService.loginUser(loginUserRequest);
         return ResponseEntity.status(HttpStatus.OK).body(jwtResponse);
     }

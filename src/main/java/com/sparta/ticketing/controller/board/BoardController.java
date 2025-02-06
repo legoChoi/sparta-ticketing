@@ -6,6 +6,7 @@ import com.sparta.ticketing.dto.board.BoardResponse;
 import com.sparta.ticketing.dto.board.BoardUpdateRequest;
 import com.sparta.ticketing.service.board.BoardService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class BoardController {
 
     @PostMapping
     public ResponseEntity<BoardResponse> addBoard(
-            @RequestBody BoardRequest boardRequest,
+            @Valid @RequestBody BoardRequest boardRequest,
             HttpServletRequest httpServletRequest
             ) {
         Long id = (Long) httpServletRequest.getAttribute("userId");
@@ -46,7 +47,7 @@ public class BoardController {
 
     @PatchMapping
     public ResponseEntity<BoardResponse> updateBoard(
-            @RequestBody BoardUpdateRequest boardRequest,
+            @Valid @RequestBody BoardUpdateRequest boardRequest,
             HttpServletRequest httpServletRequest
     ) {
         Long id = (Long) httpServletRequest.getAttribute("userId");

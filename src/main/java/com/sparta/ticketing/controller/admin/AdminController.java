@@ -6,6 +6,7 @@ import com.sparta.ticketing.dto.admin.AdminResponse;
 import com.sparta.ticketing.dto.admin.UpdateAdminRequest;
 import com.sparta.ticketing.service.admin.AdminService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class AdminController {
     private final AdminService adminService;
 
     @PostMapping
-    public ResponseEntity<AdminResponse> addAdmin(@RequestBody AdminRequest adminRequest) {
+    public ResponseEntity<AdminResponse> addAdmin(@Valid @RequestBody AdminRequest adminRequest) {
         AdminResponse adminResponse = adminService.addAdmin(adminRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(adminResponse);
     }

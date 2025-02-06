@@ -5,6 +5,7 @@ import com.sparta.ticketing.dto.comment_like.CommentLikeRequest;
 import com.sparta.ticketing.dto.comment_like.CommentLikeResponse;
 import com.sparta.ticketing.service.comment_like.CommentLikeService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class CommentLikeController {
 
     @PostMapping
     public ResponseEntity<CommentLikeResponse> addCommentLike(
-            @RequestBody CommentLikeRequest commentLikeRequest,
+            @Valid @RequestBody CommentLikeRequest commentLikeRequest,
             HttpServletRequest httpServletRequest
     ) {
         Long id = (Long) httpServletRequest.getAttribute("userId");
@@ -46,7 +47,7 @@ public class CommentLikeController {
 
     @DeleteMapping("/{commentLikeId}")
     public ResponseEntity<Void> deleteCommentLike(
-            @PathVariable Long commentLikeId,
+            @Valid @PathVariable Long commentLikeId,
             HttpServletRequest httpServletRequest
     ) {
         Long id = (Long) httpServletRequest.getAttribute("userId");

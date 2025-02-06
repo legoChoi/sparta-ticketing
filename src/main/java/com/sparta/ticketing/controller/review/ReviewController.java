@@ -6,6 +6,7 @@ import com.sparta.ticketing.dto.review.ReviewResponse;
 import com.sparta.ticketing.dto.review.ReviewUpdateRequest;
 import com.sparta.ticketing.service.review.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class ReviewController {
 
     @PostMapping
     public ResponseEntity<ReviewResponse> addReview(
-            @RequestBody ReviewRequest reviewRequest,
+            @Valid @RequestBody ReviewRequest reviewRequest,
             HttpServletRequest httpServletRequest
     ) {
         Long id = (Long) httpServletRequest.getAttribute("userId");
@@ -48,7 +49,7 @@ public class ReviewController {
 
     @PatchMapping
     public ResponseEntity<ReviewResponse> updateReview(
-            @RequestBody ReviewUpdateRequest reviewUpdateRequest,
+            @Valid @RequestBody ReviewUpdateRequest reviewUpdateRequest,
             HttpServletRequest httpServletRequest
     ) {
         Long id = (Long) httpServletRequest.getAttribute("userId");

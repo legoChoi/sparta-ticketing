@@ -5,6 +5,7 @@ import com.sparta.ticketing.dto.user.UserUpdateRequest;
 import com.sparta.ticketing.dto.user.UserResponse;
 import com.sparta.ticketing.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class UserController {
     private final UserService usersService;
 
     @PostMapping
-    public ResponseEntity<UserResponse> addUser(@RequestBody UserRequest usersRequest) {
+    public ResponseEntity<UserResponse> addUser(@Valid @RequestBody UserRequest usersRequest) {
         UserResponse usersResponse = usersService.addUser(usersRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(usersResponse);
     }
@@ -34,7 +35,7 @@ public class UserController {
 
     @PatchMapping
     public ResponseEntity<UserResponse> updateUser(
-            @RequestBody UserRequest usersRequest,
+            @Valid @RequestBody UserRequest usersRequest,
             HttpServletRequest httpServletRequest
             ) {
         Long id = (Long) httpServletRequest.getAttribute("userId");

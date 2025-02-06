@@ -3,6 +3,7 @@ package com.sparta.ticketing.controller.reservation;
 import com.sparta.ticketing.dto.reservation.ReservationGetResponse;
 import com.sparta.ticketing.dto.reservation.ReservationPostRequest;
 import com.sparta.ticketing.service.reservation.ReservationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class ReservationController {
     private final ReservationService service;
 
     @PostMapping
-    public ResponseEntity<String> postReservation(@RequestBody ReservationPostRequest dto) {
+    public ResponseEntity<String> postReservation(@Valid @RequestBody ReservationPostRequest dto) {
         service.addReservation(dto.getSessionId(), dto.getSeatId(), dto.getName());
         return ResponseEntity.created(URI.create("")).build();
     }

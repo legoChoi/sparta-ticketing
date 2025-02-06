@@ -4,6 +4,7 @@ import com.sparta.ticketing.dto.hall.AddHallRequest;
 import com.sparta.ticketing.dto.hall.HallListResponse;
 import com.sparta.ticketing.dto.hall.HallResponse;
 import com.sparta.ticketing.service.hall.HallService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class HallController {
     private final HallService hallService;
 
     @PostMapping
-    public ResponseEntity<HallResponse> addHall(@RequestBody AddHallRequest addHallRequest) {
+    public ResponseEntity<HallResponse> addHall(@Valid @RequestBody AddHallRequest addHallRequest) {
         HallResponse hallResponse = hallService.addHall(addHallRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(hallResponse);
     }
