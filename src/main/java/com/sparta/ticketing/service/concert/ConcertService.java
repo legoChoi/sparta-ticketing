@@ -28,15 +28,20 @@ public class ConcertService{
         concertConnectorInterface.addConcert(request.getName());
     }
 
+//    public List<GetConcertResponse> cachingSearchConcert(String name, int page, int size) {
+//        List<GetConcertResponse> concertResponses = searchPagingConcert(name);
+//        int listSize = concertResponses.size();
+//        int start = page * size;
+//
+//        if(start > listSize) return new ArrayList<>();
+//
+//        if(start + size > listSize) { size = listSize - start; }
+//        return concertResponses.subList(start, start + size);
+//    }
+
+    @Cacheable(value = "searchConcert", key = "#name + '-' + #page + '-' + #size")
     public List<GetConcertResponse> cachingSearchConcert(String name, int page, int size) {
-        List<GetConcertResponse> concertResponses = searchAllConcert(name);
-        int listSize = concertResponses.size();
-        int start = page * size;
-
-        if(start > listSize) return new ArrayList<>();
-
-        if(start + size > listSize) { size = listSize - start; }
-        return concertResponses.subList(start, start + size);
+        return concertConnectorInterface.searchConcert(name, page, size);
     }
 
     public ConcertResponse getAllConcerts() {
@@ -64,10 +69,10 @@ public class ConcertService{
         return concertConnectorInterface.searchConcert(name, page, size);
     }
 
-    @Cacheable(value = "searchConcert", key = "#name")
-    public List<GetConcertResponse> searchAllConcert(String name) {
-        return concertConnectorInterface.searchAllConcert(name);
-    }
+//    @Cacheable(value = "searchConcert", key = "#name")
+//    public List<GetConcertResponse> searchAllConcert(String name) {
+//        return concertConnectorInterface.searchAllConcert(name);
+//    }
 
     @Transactional
     public void bulkInsert(int repeats) {
