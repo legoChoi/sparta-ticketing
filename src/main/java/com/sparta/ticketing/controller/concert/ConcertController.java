@@ -44,12 +44,21 @@ public class ConcertController {
         return ResponseEntity.ok(concertService.getBsetConcerts(size));
     }
 
-    @GetMapping("/search")
+    @GetMapping("/search/v1")
     public ResponseEntity<List<GetConcertResponse>> searchConcert(
         @RequestParam String name,
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size
     ) {
         return ResponseEntity.ok(concertService.searchConcert(name, page, size));
+    }
+
+    @GetMapping("/search/v2")
+    public ResponseEntity<List<GetConcertResponse>> cachingSearchConcert(
+        @RequestParam String name,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size
+    ) {
+        return ResponseEntity.ok(concertService.cachingSearchConcert(name, page, size));
     }
 }

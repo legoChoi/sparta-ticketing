@@ -39,3 +39,6 @@ out/
 ### Hibernate JPA ###
 *.properties
 *.yml
+
+### QueryDSL ###
+src/main/generated/

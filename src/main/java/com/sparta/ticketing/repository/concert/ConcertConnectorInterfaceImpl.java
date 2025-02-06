@@ -5,7 +5,6 @@ import com.sparta.ticketing.dto.concert.GetConcertResponse;
 import com.sparta.ticketing.entity.Concert;
 import com.sparta.ticketing.service.concert.ConcertConnectorInterface;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -15,10 +14,10 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
 @Transactional
 public class ConcertConnectorInterfaceImpl implements ConcertConnectorInterface {
     private final ConcertRepository concertRepository;
+    private final QueryDslConcertRepository queryDslConcertRepository;
     private final JdbcTemplate jdbcTemplate;
 
     @Override
@@ -58,8 +57,14 @@ public class ConcertConnectorInterfaceImpl implements ConcertConnectorInterface 
     }
 
     @Override
+    public List<GetConcertResponse> searchAllConcert(String name) {
+        return queryDslConcertRepository.searchConcert(name, null);
+    }
+
+
+    @Override
     public List<GetConcertResponse> searchConcert(String name, int page, int size) {
-        return concertRepository.searchConcert(name, PageRequest.of(page, size));
+        return queryDslConcertRepository.searchConcert(name, PageRequest.of(page, size));
     }
 
     @Override
