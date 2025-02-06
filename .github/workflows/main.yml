@@ -8,8 +8,8 @@ permissions:
   contents: read
   
 concurrency:
-	group: deploy
-	cancel-in-progress: true
+  group: deploy
+  cancel-in-progress: true
 
 jobs:
   build:
