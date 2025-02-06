@@ -24,7 +24,7 @@ public class JwtFilter implements Filter {
 
     private final JwtUtil jwtUtil;
 
-    private final List<String> allowedPrefix = List.of("/concerts", "/sessions", "/reservations", "/seats", "/health", "/env");
+    private final List<String> allowedPrefix = List.of("/concerts", "/sessions", "/reservations", "/seats", "/health", "/env","/anonymousUser","/auth","/adminAuth");
 
     @Autowired
     public JwtFilter(JwtUtil jwtUtil) {

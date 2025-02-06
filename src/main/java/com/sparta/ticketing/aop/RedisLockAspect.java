@@ -1,6 +1,6 @@
-package com.sparta.ticketing.aspect;
+package com.sparta.ticketing.aop;
 
-import com.sparta.ticketing.annotation.RedisLock;
+import com.sparta.ticketing.aop.annotation.RedisLock;
 import com.sparta.ticketing.lock.RedisLockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ public class RedisLockAspect {
     private final ParameterNameDiscoverer nameDiscoverer = new DefaultParameterNameDiscoverer();
     private final ExpressionParser parser = new SpelExpressionParser();
 
-    @Around("@annotation(com.sparta.ticketing.annotation.RedisLock)")
+    @Around("@annotation(com.sparta.ticketing.aop.annotation.RedisLock)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         // 서비스 로직 수행 전 lock 획득
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();

@@ -20,15 +20,13 @@ public class CommentLike {
     @JoinColumn(name = "comment_id")
     private Comment comment;
 
-    private boolean isLike;
 
-    public CommentLike(User user, Comment comment, boolean isLike) {
+    public CommentLike(User user, Comment comment) {
         this.user = user;
         this.comment = comment;
-        this.isLike = isLike;
     }
 
-    public static CommentLike from() {
-        return new CommentLike();
+    public static CommentLike from(User user, Comment comment) {
+        return new CommentLike(user,comment);
     }
 }

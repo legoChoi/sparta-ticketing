@@ -18,4 +18,6 @@ public interface CommentConnectorInterface {
     Comment updateComment(CommentUpdateRequest commentUpdateRequest, Long id);
 
     void deleteComment(Long commentId, Long id);
+
+    Comment findById(Long commentLikeRequest);
 }
