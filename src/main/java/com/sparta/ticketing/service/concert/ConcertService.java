@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class ConcertService{
     private final ConcertConnectorInterface concertConnectorInterface;
 
-    @CacheEvict(value = "concertCache", key = "#request.getName()")
+    @CacheEvict(value = "concertCache", allEntries = true)
     @Transactional
     public void addConcert(AddConcertRequest request) {
         concertConnectorInterface.addConcert(request.getName());
