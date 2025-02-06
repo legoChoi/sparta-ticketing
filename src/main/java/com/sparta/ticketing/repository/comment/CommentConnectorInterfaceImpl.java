@@ -61,11 +61,11 @@ public class CommentConnectorInterfaceImpl implements CommentConnectorInterface 
         commentRepository.delete(comment);
     }
 
-    private Comment findById(Long commentId) {
+    public Comment findById(Long commentId) {
         return commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("댓글 못찾음"));
     }
 
-    private static void extracted(Comment comment, User user) {
+    private void extracted(Comment comment, User user) {
         if (!comment.getUser().getId().equals(user.getId())) {
             throw new RuntimeException("댓글에 접근권한없음");
         }

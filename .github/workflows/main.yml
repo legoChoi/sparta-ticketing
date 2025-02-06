@@ -6,6 +6,10 @@ on:
 
 permissions:
   contents: read
+  
+concurrency:
+  group: deploy
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -38,8 +42,25 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build Docker
-        run: docker build --platform linux/amd64 -t ${{ secrets.DOCKERHUB_USERNAME }}/sparta_ticketing_server .
-        
-      - name: Push Docker
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/sparta_ticketing_server:latest
+      - name: Docker Build & Push
+        run: |
+          docker build --platform linux/amd64 -t ${{ secrets.DOCKERHUB_USERNAME }}/sparta_ticketing_server .
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/sparta_ticketing_server:latest
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Docker compose
+        uses: appleboy/ssh-action@master
+        with:
+          username: ubuntu
+          host: ${{ secrets.LIVE_SERVER_IP }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script_stop: true
+          script: |
+            sudo docker stop ${{env.CURRENT_UPSTREAM}}
+            sudo docker rm ${{env.CURRENT_UPSTREAM}}
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sparta_ticketing_server:latest
+            sudo docker-compose up -d
