@@ -21,15 +21,13 @@ public class BoardLike {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private boolean isLike;
 
-    public BoardLike(Board board, User user, boolean isLike) {
+    public BoardLike(Board board, User user) {
         this.board = board;
         this.user = user;
-        this.isLike = isLike;
     }
 
-    public static BoardLike from(User user, Board board,boolean isLike) {
-        return new BoardLike(board,user,isLike);
+    public static BoardLike from(User user, Board board) {
+        return new BoardLike(board,user);
     }
 }

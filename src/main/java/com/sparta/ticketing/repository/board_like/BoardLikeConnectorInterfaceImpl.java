@@ -23,7 +23,7 @@ public class BoardLikeConnectorInterfaceImpl implements BoardLikeConnectorInterf
     public BoardLike addBoardLike(BoardLikeRequest boardLikeRequest, Long id) {
         User user = userConnectInterface.findById(id);
         Board board = boardConnectorInterface.findById(boardLikeRequest.getBoardId());
-        BoardLike boardLike = BoardLike.from(user, board, true);
+        BoardLike boardLike = BoardLike.from(user, board);
         return boardLikeRepository.save(boardLike);
     }
 
