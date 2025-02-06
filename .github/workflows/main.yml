@@ -6,6 +6,10 @@ on:
 
 permissions:
   contents: read
+  
+concurrency:
+	group: deploy
+	cancel-in-progress: true
 
 jobs:
   build:
@@ -32,6 +36,11 @@ jobs:
           chmod +x ./gradlew 
           ./gradlew build
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
@@ -42,12 +51,7 @@ jobs:
         run: |
           docker build --platform linux/amd64 -t ${{ secrets.DOCKERHUB_USERNAME }}/sparta_ticketing_server .
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/sparta_ticketing_server:latest
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
+          
       - name: Docker compose
         uses: appleboy/ssh-action@master
         with:
@@ -60,3 +64,4 @@ jobs:
             sudo docker rm ${{env.CURRENT_UPSTREAM}}
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sparta_ticketing_server:latest
             sudo docker-compose up -d
+            sudo docker image prune -f
