@@ -47,8 +47,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download application.yml files
-        uses: actions/download-artifact@v3
+      - name: Download .yml files
+        uses: actions/download-artifact@v4
         with:
           name: config-files
           path: ./src/main/resources/
