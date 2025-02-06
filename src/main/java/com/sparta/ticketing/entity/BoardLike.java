@@ -29,7 +29,7 @@ public class BoardLike {
         this.isLike = isLike;
     }
 
-    public static BoardLike from() {
-        return new BoardLike();
+    public static BoardLike from(User user, Board board,boolean isLike) {
+        return new BoardLike(board,user,isLike);
     }
 }

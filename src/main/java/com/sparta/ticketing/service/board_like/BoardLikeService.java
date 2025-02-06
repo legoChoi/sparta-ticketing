@@ -28,7 +28,7 @@ public class BoardLikeService {
         return boardLikes.stream().map(BoardLikeResponse::from).toList();
     }
 
-    public void deleteBoardLike(Long boardId, Long userId) {
-        boardLikeConnectorInterface.deleteBoardLike(boardId,userId);
+    public void deleteBoardLike(Long boardLikeId, Long userId) {
+        boardLikeConnectorInterface.deleteBoardLike(boardLikeId,userId);
     }
 }

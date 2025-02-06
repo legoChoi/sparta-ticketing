@@ -15,5 +15,5 @@ public interface BoardLikeConnectorInterface {
 
     List<BoardLike> findAllByUserId(Long id);
 
-    void deleteBoardLike(Long boardId, Long userId);
+    void deleteBoardLike(Long boardLikeId, Long userId);
 }
