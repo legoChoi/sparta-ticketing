@@ -59,4 +59,4 @@ jobs:
               sudo docker stop ${{env.CURRENT_UPSTREAM}}
               sudo docker rm ${{env.CURRENT_UPSTREAM}}
               sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sparta_ticketing_server:latest
-              sudo docker-compose up -d
+              sudo docker-compose up -d backend
