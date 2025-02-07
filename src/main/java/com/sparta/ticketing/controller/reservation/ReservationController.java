@@ -18,8 +18,8 @@ public class ReservationController {
 
     @PostMapping
     public ResponseEntity<String> postReservation(@Valid @RequestBody ReservationPostRequest dto) {
-        service.addReservation(dto.getSessionId(), dto.getSeatId(), dto.getName());
-        return ResponseEntity.created(URI.create("")).build();
+        return ResponseEntity.created(
+            URI.create(service.addReservation(dto.getSessionId(), dto.getSeatId(), dto.getName()))).build();
     }
 
     @GetMapping

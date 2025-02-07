@@ -23,7 +23,7 @@ public class ReservationService{
 
     @Transactional
     @RedisLock(key = "'lock:session:' + #sessionId + ':seat:' + #seatId")
-    public void addReservation(Long sessionId, Long seatId, String name) {
+    public String addReservation(Long sessionId, Long seatId, String name) {
         ReservationStatus status = ReservationStatus.REQUEST;
         Session session = sessionConnector.findById(sessionId);
         Seat seat = seatsConnector.findById(seatId);
@@ -34,9 +34,10 @@ public class ReservationService{
 
         reservation.setStatus(status);
 
-        reservationConnector.addReservation(reservation);
+        Reservation result = reservationConnector.addReservation(reservation);
         swapSeatAvailability(reservation.getSession(), reservation.getSeats());
 
+        return result.getReservationId().toString();
     }
 
     public ReservationGetResponse getReservations() {
@@ -44,6 +45,7 @@ public class ReservationService{
     }
 
     @Transactional
+    @RedisLock(key = "'lock:session:' + #sessionId + ':seat:' + #seatId")
     public void cancelReservation(Long reservationId) {
         Reservation reservation = reservationConnector.findById(reservationId);
         reservation.setStatus(ReservationStatus.CANCEL);
