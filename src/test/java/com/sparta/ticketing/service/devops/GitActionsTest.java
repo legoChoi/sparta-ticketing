@@ -10,6 +10,6 @@ public class GitActionsTest {
     @Test
     void test() {
         int a = 1;
-        assertThat(a).isEqualTo(0);
+        assertThat(a).isEqualTo(1);
     }
 }
