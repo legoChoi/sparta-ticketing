@@ -41,3 +41,52 @@
 
 ### _ERD_
 ![Ticketing_ERD](https://github.com/legoChoi/sparta-ticketing/blob/master/erd.png?raw=true)
+
+---
+
+### _Search Performance Test_
+#### Local Memory Cache
+검색어 전체 검색 결과를 캐싱하는 방식
+
+- 무작위 검색
+
+![Local_Random](https://github.com/legoChoi/sparta-ticketing/blob/master/local_memory_random_search.png?raw=true)
+
+- 인기 검색어
+
+![Local_Best](https://github.com/legoChoi/sparta-ticketing/blob/master/local_memory_best.png?raw=true)
+
+- 인기 검색어 단어의 일부
+
+![Local_Partial](https://github.com/legoChoi/sparta-ticketing/blob/master/local_memory_best_partial.png?raw=true)
+
+#### Local Memory & Paging Cache
+페이징 검색에 대한 결과를 캐싱하는 방식
+
+- 무작위 검색
+
+![Paging_Random](https://github.com/legoChoi/sparta-ticketing/blob/master/paging_cache_random_search.png?raw=true)
+
+- 인기 검색어
+
+![Paging_Best](https://github.com/legoChoi/sparta-ticketing/blob/master/paging_cache_best.png?raw=true)
+
+- 인기 검색어 단어의 일부
+
+![Paging_Partial](https://github.com/legoChoi/sparta-ticketing/blob/master/paging_cache_best_partial.png?raw=true)
+
+
+#### Redis Cache
+검색 결과를 Redis에 캐싱하는 방식
+
+- 무작위 검색
+
+![Redis_Random](https://github.com/legoChoi/sparta-ticketing/blob/master/redis_random_search.png?raw=true)
+
+- 인기 검색어
+
+![Redis_Best](https://github.com/legoChoi/sparta-ticketing/blob/master/redis_best.png?raw=true)
+
+- 인기 검색어 단어의 일부
+
+![Redis_Partial](https://github.com/legoChoi/sparta-ticketing/blob/master/redis_partial_best.png?raw=true)
