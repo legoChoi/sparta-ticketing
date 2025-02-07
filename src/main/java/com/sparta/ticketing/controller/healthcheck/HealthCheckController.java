@@ -36,6 +36,6 @@ public class HealthCheckController {
 
     @GetMapping("/env")
     public ResponseEntity<String> getEnv() {
-        return ResponseEntity.ok(env + " 2.0");
+        return ResponseEntity.ok(env + " 3.0");
     }
 }
